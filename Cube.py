@@ -337,6 +337,7 @@ class Cube:
             # Rotate the cube to the next side
             self.y(False)
 
+    # Unfinished function... I'm stumped and need to marinade some more
     def f2l(self):
         sides_solved = 0
         bottom_color = self.find_by_pos(0, 0, -1).zcol
