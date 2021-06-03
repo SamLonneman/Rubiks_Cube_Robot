@@ -252,9 +252,9 @@ class Cube:
 
     def solve(self):
         self.cross()
-        self.f2l()
-        self.oll()
-        self.pll()
+        # self.f2l()
+        # self.oll()
+        # self.pll()
 
     def solve_color_agnostically(self):
         scrambled_cube = deep_copy(self)
@@ -348,7 +348,8 @@ class Cube:
             edge = self.find_by_col(front_color, right_color, None)
 
             # If this pair is tied up somewhere else, continue on
-            if corner.zpos < 1 and edge.zpos < 1 and (corner.xpos < 1 and edge.xpos < 1 or corner.ypos < 1 and edge.ypos < 1):
+            if corner.zpos < 1 and edge.zpos < 1 and (
+                    corner.xpos < 1 and edge.xpos < 1 or corner.ypos < 1 and edge.ypos < 1):
                 self.yi()
                 continue
 
@@ -367,10 +368,8 @@ class Cube:
                     if edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("Ri Fi R U R Ui Ri F")
                         sides_solved += 1
-                        print(self)
 
             sides_solved += 1
-
 
     def oll(self):
         return
