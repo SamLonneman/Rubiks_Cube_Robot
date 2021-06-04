@@ -1,5 +1,5 @@
 from copy import deepcopy as deep_copy
-from Helpers import readable_to_cubestring
+from Helpers import create_cubestring
 
 
 class Piece:
@@ -107,8 +107,8 @@ class Cube:
             result += "\n"
         return result
 
-    def get_cubestring(self):
-        return readable_to_cubestring(str(self))
+    def cubestring(self):
+        return create_cubestring(str(self))
 
     # Performs series of turns from a string. Ex: "R Li Di U B"
     def move(self, sequence, count_moves=True):

@@ -18,4 +18,4 @@ print(cubes_tested, "cubes solved in", round(current_time() - start_time, 3),
       "seconds with an average of", round(sum_moves / cubes_tested, 2), "moves")
 
 cube = Cube(SOLVED)
-print(cube.get_cubestring())
+print(cube.cubestring())

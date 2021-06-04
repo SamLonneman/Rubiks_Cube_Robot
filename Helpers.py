@@ -1,11 +1,11 @@
 # This helper function converts a writeable file into a cubestring.
 def read_file(input_file):
     input_file = open(input_file, "r")
-    return readable_to_cubestring(input_file.read())
+    return create_cubestring(input_file.read())
 
 
-def readable_to_cubestring(readable):
-    color_strips = readable.split()
+def create_cubestring(readable_string):
+    color_strips = readable_string.split()
     copy = color_strips.copy()
     color_strips[3] = copy[3]
     color_strips[4] = copy[7]
