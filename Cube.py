@@ -1,4 +1,5 @@
 from copy import deepcopy as deep_copy
+from Helpers import readable_to_cubestring
 
 
 class Piece:
@@ -105,6 +106,9 @@ class Cube:
             result += self.find_by_pos(x, 1, -1).zcol
             result += "\n"
         return result
+
+    def get_cubestring(self):
+        return readable_to_cubestring(str(self))
 
     # Performs series of turns from a string. Ex: "R Li Di U B"
     def move(self, sequence, count_moves=True):
@@ -337,7 +341,7 @@ class Cube:
             # Rotate the cube to the next side
             self.y(False)
 
-    # Unfinished function... I'm stumped and need to marinade some more
+    # Unfinished function... I'm stumped and need to marinate some more
     def f2l(self):
         sides_solved = 0
         bottom_color = self.find_by_pos(0, 0, -1).zcol
