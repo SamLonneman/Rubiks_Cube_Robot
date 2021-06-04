@@ -14,8 +14,15 @@ for scramble in SCRAMBLES.split("\n")[:150]:
     cube.solve_color_agnostically()
     sum_moves += cube.move_count
     cubes_tested += 1
-print(cubes_tested, "cubes solved in", round(current_time() - start_time, 3),
-      "seconds with an average of", round(sum_moves / cubes_tested, 2), "moves")
 
-cube = Cube(SOLVED)
-print(cube.cubestring())
+    # Test if the cross was successful
+    s = cube.cubestring()
+    if not (s[49] == s[48] == s[46] == s[50] == s[52] and
+            s[22] == s[25] and
+            s[31] == s[34] and
+            s[40] == s[43] and
+            s[13] == s[16]):
+        print("Test #", cubes_tested + 1, "failed.")
+
+print(cubes_tested, "tests completed in", round(current_time() - start_time, 3),
+      "seconds with an average of", round(sum_moves / cubes_tested, 2), "moves")

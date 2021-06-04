@@ -343,9 +343,9 @@ class Cube:
 
     # Unfinished function... I'm stumped and need to marinate some more
     def f2l(self):
-        sides_solved = 0
+        pairs_solved = 0
         bottom_color = self.find_by_pos(0, 0, -1).zcol
-        while sides_solved != 4:
+        while pairs_solved != 4:
             front_color = self.find_by_pos(1, 0, 0).xcol
             right_color = self.find_by_pos(0, 1, 0).ycol
             corner = self.find_by_col(front_color, right_color, bottom_color)
@@ -363,17 +363,17 @@ class Cube:
                     # Case 01
                     if edge.pos() == (1, 1, 0) and edge.ycol == front_color:
                         self.move("R Ui Ri U yi Ri U U R Ui Ui Ri U R")
-                        sides_solved += 1
+                        pairs_solved += 1
                     # Case 02
                     if edge.pos() == (1, 0, 1) and edge.xcol == front_color:
                         self.move("U R Ui Ri Ui yi Ri U R")
-                        sides_solved += 1
+                        pairs_solved += 1
                     # Case 03
                     if edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("Ri Fi R U R Ui Ri F")
-                        sides_solved += 1
+                        pairs_solved += 1
 
-            sides_solved += 1
+            pairs_solved += 1
 
     def oll(self):
         return
