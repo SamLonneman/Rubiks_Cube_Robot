@@ -463,6 +463,70 @@ class Cube:
                     # Case 21
                     elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("R Ui Ui Ri Ui R U Ri")
+                # If corner is white side front
+                elif corner.xcol == bottom_color:
+                    # Case 22
+                    if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
+                        self.move("Ui R Ui Ri U U R Ui Ri")
+                    # Case 23
+                    elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
+                        self.move("Ui R U Ri yi U Ri Ui R")
+                    # Case 24
+                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
+                        self.move("yi U Ri U R Ui Ri Ui R")
+                    # Case 25
+                    elif edge.pos() == (0, -1, 1) and edge.ycol == front_color:
+                        self.move("yi Ri Ui R")
+                    # Case 26
+                    elif edge.pos() == (-1, 0, 1) and edge.xcol == front_color:
+                        self.move("yi U Ri Ui R Ui Ri Ui R")
+                    # Case 27
+                    elif edge.pos() == (0, 1, 1) and edge.ycol == front_color:
+                        self.move("yi R Ui Ui Ri Ri Ui R R Ui Ri")
+                    # Case 28 FUNKY CASE MAYBE FIX LATER
+                    elif edge.pos() == (1, 0, 1) and edge.xcol == right_color:
+                        self.move("xi R U x L Ui Li xi Ui Ri x")
+                    # Case 29
+                    elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
+                        self.move("Ui R Ui Ui Ri U U R Ui Ri")
+                    # Case 30
+                    elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
+                        self.move("Ui R U Ri Ui R Ui Ui Ri")
+                    # Case 31
+                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
+                        self.move("U R Ui Ri")
+                # If corner is white side right
+                elif corner.ycol == bottom_color:
+                    # Case 32
+                    if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
+                        self.move("Ui R Ui Ui Ri U R U Ri")
+                    # Case 33
+                    elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
+                        self.move("yi U Ri Ui R y Ui R U Ri")  # y Ui == di
+                    # Case 34
+                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
+                        self.move("yi Ui Ri U R")
+                    # Case 35
+                    elif edge.pos() == (0, -1, 1) and edge.ycol == front_color:
+                        self.move("yi U Ri Ui R Ui Ui Ri U R")
+                    # Case 36
+                    elif edge.pos() == (-1, 0, 1) and edge.xcol == front_color:
+                        self.move("yi U Ri U U R Ui Ui Ri U R")
+                    # Case 37
+                    elif edge.pos() == (0, 1, 1) and edge.ycol == front_color:
+                        self.move("R Ui Ri U U yi Ri Ui R")
+                    # Case 38
+                    elif edge.pos() == (1, 0, 1) and edge.xcol == right_color:
+                        self.move("R Ui Ri U R Ui Ri U U R Ui Ri")
+                    # Case 39
+                    elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
+                        self.move("Ui R U Ri U R U Ri")
+                    # Case 40
+                    elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
+                        self.move("R U Ri")
+                    # Case 41
+                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
+                        self.move("Ui R Ui Ri U R U Ri")
 
             # Now that a pair has been placed, increment pairs solved and turn cube
             pairs_solved += 1
