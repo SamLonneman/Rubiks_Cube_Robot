@@ -116,158 +116,152 @@ class Cube:
             getattr(self, turn)(count_moves)
 
     # The following 12 functions each represent a different turn
-    def F(self, count_moves=True):
-        self.solution_sequence += "F "
-        if count_moves:
+    def F(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "F "
         for p in self.pieces:
             if p.xpos == 1:
                 p.ypos, p.zpos = p.zpos, -p.ypos
                 p.ycol, p.zcol = p.zcol, p.ycol
 
-    def Fi(self, count_moves=True):
-        self.solution_sequence += "Fi "
-        if count_moves:
+    def Fi(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "Fi "
         for p in self.pieces:
             if p.xpos == 1:
                 p.ypos, p.zpos = -p.zpos, p.ypos
                 p.ycol, p.zcol = p.zcol, p.ycol
 
-    def B(self, count_moves=True):
-        self.solution_sequence += "B "
-        if count_moves:
+    def B(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "B "
         for p in self.pieces:
             if p.xpos == -1:
                 p.ypos, p.zpos = -p.zpos, p.ypos
                 p.ycol, p.zcol = p.zcol, p.ycol
 
-    def Bi(self, count_moves=True):
-        self.solution_sequence += "Bi "
-        if count_moves:
+    def Bi(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "Bi "
         for p in self.pieces:
             if p.xpos == -1:
                 p.ypos, p.zpos = p.zpos, -p.ypos
                 p.ycol, p.zcol = p.zcol, p.ycol
 
-    def R(self, count_moves=True):
-        self.solution_sequence += "R "
-        if count_moves:
+    def R(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "R "
         for p in self.pieces:
             if p.ypos == 1:
                 p.xpos, p.zpos = -p.zpos, p.xpos
                 p.xcol, p.zcol = p.zcol, p.xcol
 
-    def Ri(self, count_moves=True):
-        self.solution_sequence += "Ri "
-        if count_moves:
+    def Ri(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "Ri "
         for p in self.pieces:
             if p.ypos == 1:
                 p.xpos, p.zpos = p.zpos, -p.xpos
                 p.xcol, p.zcol = p.zcol, p.xcol
 
-    def L(self, count_moves=True):
-        self.solution_sequence += "L "
-        if count_moves:
+    def L(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "L "
         for p in self.pieces:
             if p.ypos == -1:
                 p.xpos, p.zpos = p.zpos, -p.xpos
                 p.xcol, p.zcol = p.zcol, p.xcol
 
-    def Li(self, count_moves=True):
-        self.solution_sequence += "Li "
-        if count_moves:
+    def Li(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "Li "
         for p in self.pieces:
             if p.ypos == -1:
                 p.xpos, p.zpos = -p.zpos, p.xpos
                 p.xcol, p.zcol = p.zcol, p.xcol
 
-    def U(self, count_moves=True):
-        self.solution_sequence += "U "
-        if count_moves:
+    def U(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "U "
         for p in self.pieces:
             if p.zpos == 1:
                 p.ypos, p.xpos = -p.xpos, p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
-    def Ui(self, count_moves=True):
-        self.solution_sequence += "Ui "
-        if count_moves:
+    def Ui(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "Ui "
         for p in self.pieces:
             if p.zpos == 1:
                 p.ypos, p.xpos = p.xpos, -p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
-    def D(self, count_moves=True):
-        self.solution_sequence += "D "
-        if count_moves:
+    def D(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "D "
         for p in self.pieces:
             if p.zpos == -1:
                 p.ypos, p.xpos = p.xpos, -p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
-    def Di(self, count_moves=True):
-        self.solution_sequence += "Di "
-        if count_moves:
+    def Di(self, part_of_solution=True):
+        if part_of_solution:
             self.move_count += 1
+            self.solution_sequence += "Di "
         for p in self.pieces:
             if p.zpos == -1:
                 p.ypos, p.xpos = -p.xpos, p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
-    def x(self, count_moves=True):
-        self.solution_sequence += "x "
-        if count_moves:
-            self.move_count += 1
+    def x(self, part_of_solution=True):
+        if part_of_solution:
+            self.solution_sequence += "x "
         for p in self.pieces:
             p.xpos, p.zpos = -p.zpos, p.xpos
             p.xcol, p.zcol = p.zcol, p.xcol
 
-    def xi(self, count_moves=True):
-        self.solution_sequence += "xi "
-        if count_moves:
-            self.move_count += 1
+    def xi(self, part_of_solution=True):
+        if part_of_solution:
+            self.solution_sequence += "xi "
         for p in self.pieces:
             p.xpos, p.zpos = p.zpos, -p.xpos
             p.xcol, p.zcol = p.zcol, p.xcol
 
-    def y(self, count_moves=True):
-        self.solution_sequence += "y "
-        if count_moves:
-            self.move_count += 1
+    def y(self, part_of_solution=True):
+        if part_of_solution:
+            self.solution_sequence += "y "
         for p in self.pieces:
             p.ypos, p.xpos = -p.xpos, p.ypos
             p.ycol, p.xcol = p.xcol, p.ycol
 
-    def yi(self, count_moves=True):
-        self.solution_sequence += "yi "
-        if count_moves:
-            self.move_count += 1
+    def yi(self, part_of_solution=True):
+        if part_of_solution:
+            self.solution_sequence += "yi "
         for p in self.pieces:
             p.ypos, p.xpos = p.xpos, -p.ypos
             p.ycol, p.xcol = p.xcol, p.ycol
 
-    def z(self, count_moves=True):
-        self.solution_sequence += "z "
-        if count_moves:
-            self.move_count += 1
+    def z(self, part_of_solution=True):
+        if part_of_solution:
+            self.solution_sequence += "z "
         for p in self.pieces:
             p.ypos, p.zpos = p.zpos, -p.ypos
             p.ycol, p.zcol = p.zcol, p.ycol
 
-    def zi(self, count_moves=True):
-        self.solution_sequence += "zi "
-        if count_moves:
-            self.move_count += 1
+    def zi(self, part_of_solution=True):
+        if part_of_solution:
+            self.solution_sequence += "zi "
         for p in self.pieces:
             p.ypos, p.zpos = -p.zpos, p.ypos
             p.ycol, p.zcol = p.zcol, p.ycol
@@ -283,7 +277,7 @@ class Cube:
         self.solve()
         for orientation in "x", "x x", "xi", "y xi", "yi xi":
             new_cube = deep_copy(scrambled_cube)
-            new_cube.move(orientation, False)
+            new_cube.move(orientation)
             new_cube.solve()
             if new_cube.move_count < self.move_count:
                 self.__dict__ = new_cube.__dict__
@@ -358,7 +352,7 @@ class Cube:
                         self.move("Di Li D") if side != 1 else self.move("Li D")
 
             # Rotate the cube to the next side
-            self.y(False)
+            self.y()
 
     # Solve the first two layers
     def f2l(self):
@@ -382,7 +376,7 @@ class Cube:
                     edge.pos() == (1, 1, 0) and edge.xcol == front_color:
                 solved_pairs.add((corner, edge))
                 unavailable_pairs.add((corner, edge))
-                self.yi(False)
+                self.yi()
                 continue
 
             # If at least one member of the pair is tied up somewhere else, turn cube and continue
@@ -390,7 +384,7 @@ class Cube:
                 unavailable_pairs.add((corner, edge))
                 if len(unavailable_pairs) >= 4:
                     self.move("R U Ri")
-                self.yi(False)
+                self.yi()
                 continue
 
             # Orient the top face appropriately

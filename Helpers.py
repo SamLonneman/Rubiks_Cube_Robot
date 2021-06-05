@@ -3,6 +3,16 @@ def read_file(input_file):
     input_file = open(input_file, "r")
     return create_cubestring(input_file.read())
 
+# Currently, this method removes xyz rotations from the solution sequence.
+# Eventually, the goal is that this method will also convert all remaining
+# Moves into their equivalents when xyz rotations are removed.
+def sequence_scrubber(sequence):
+    result = list()
+    for turn in sequence.split():
+        if not ('y' in turn or 'x' in turn or 'z' in turn):
+            result.append(turn)
+    return " ".join(result)
+
 
 def create_cubestring(readable_string):
     color_strips = readable_string.split()
