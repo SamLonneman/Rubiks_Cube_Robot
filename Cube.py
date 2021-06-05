@@ -117,6 +117,7 @@ class Cube:
 
     # The following 12 functions each represent a different turn
     def F(self, count_moves=True):
+        self.solution_sequence += "F "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -125,6 +126,7 @@ class Cube:
                 p.ycol, p.zcol = p.zcol, p.ycol
 
     def Fi(self, count_moves=True):
+        self.solution_sequence += "Fi "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -133,6 +135,7 @@ class Cube:
                 p.ycol, p.zcol = p.zcol, p.ycol
 
     def B(self, count_moves=True):
+        self.solution_sequence += "B "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -141,6 +144,7 @@ class Cube:
                 p.ycol, p.zcol = p.zcol, p.ycol
 
     def Bi(self, count_moves=True):
+        self.solution_sequence += "Bi "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -149,6 +153,7 @@ class Cube:
                 p.ycol, p.zcol = p.zcol, p.ycol
 
     def R(self, count_moves=True):
+        self.solution_sequence += "R "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -157,6 +162,7 @@ class Cube:
                 p.xcol, p.zcol = p.zcol, p.xcol
 
     def Ri(self, count_moves=True):
+        self.solution_sequence += "Ri "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -165,6 +171,7 @@ class Cube:
                 p.xcol, p.zcol = p.zcol, p.xcol
 
     def L(self, count_moves=True):
+        self.solution_sequence += "L "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -173,6 +180,7 @@ class Cube:
                 p.xcol, p.zcol = p.zcol, p.xcol
 
     def Li(self, count_moves=True):
+        self.solution_sequence += "Li "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -181,6 +189,7 @@ class Cube:
                 p.xcol, p.zcol = p.zcol, p.xcol
 
     def U(self, count_moves=True):
+        self.solution_sequence += "U "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -189,6 +198,7 @@ class Cube:
                 p.ycol, p.xcol = p.xcol, p.ycol
 
     def Ui(self, count_moves=True):
+        self.solution_sequence += "Ui "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -197,6 +207,7 @@ class Cube:
                 p.ycol, p.xcol = p.xcol, p.ycol
 
     def D(self, count_moves=True):
+        self.solution_sequence += "D "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -205,6 +216,7 @@ class Cube:
                 p.ycol, p.xcol = p.xcol, p.ycol
 
     def Di(self, count_moves=True):
+        self.solution_sequence += "Di "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -213,6 +225,7 @@ class Cube:
                 p.ycol, p.xcol = p.xcol, p.ycol
 
     def x(self, count_moves=True):
+        self.solution_sequence += "x "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -220,6 +233,7 @@ class Cube:
             p.xcol, p.zcol = p.zcol, p.xcol
 
     def xi(self, count_moves=True):
+        self.solution_sequence += "xi "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -227,6 +241,7 @@ class Cube:
             p.xcol, p.zcol = p.zcol, p.xcol
 
     def y(self, count_moves=True):
+        self.solution_sequence += "y "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -234,6 +249,7 @@ class Cube:
             p.ycol, p.xcol = p.xcol, p.ycol
 
     def yi(self, count_moves=True):
+        self.solution_sequence += "yi "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -241,6 +257,7 @@ class Cube:
             p.ycol, p.xcol = p.xcol, p.ycol
 
     def z(self, count_moves=True):
+        self.solution_sequence += "z "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -248,6 +265,7 @@ class Cube:
             p.ycol, p.zcol = p.zcol, p.ycol
 
     def zi(self, count_moves=True):
+        self.solution_sequence += "zi "
         if count_moves:
             self.move_count += 1
         for p in self.pieces:
@@ -358,10 +376,11 @@ class Cube:
             corner = self.find_by_col(front_color, right_color, bottom_color)
             edge = self.find_by_col(front_color, right_color, None)
 
-            # If at least one of the pair is tied up somewhere else, turn cube and continue
-            if edge.zpos == 0 and edge.pos() != (1, 1, 0) or corner.zpos == -1 and corner.pos() != (1, 1, -1):
+            # If at least one of the pair is tied up somewhere else or the pair is solved, turn cube and continue
+            if (edge.zpos == 0 and edge.pos() != (1, 1, 0) or corner.zpos == -1 and corner.pos() != (1, 1, -1)) or\
+                    (corner.pos() == (1, 1, -1) and corner.zcol == bottom_color and edge.pos() == (1, 1, 0) and
+                     edge.xcol == front_color):
                 self.yi(False)
-                pairs_solved += 1
                 continue
 
             # Orient the top face appropriately
@@ -401,34 +420,41 @@ class Cube:
                     # Case 03
                     elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("Ri Fi R U R Ui Ri F")
+                        self.move("yi")
                 # If the corner is white side front
                 elif corner.xcol == bottom_color:
                     # Case 04
                     if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
                         self.move("R U Ri Ui R U U Ri Ui R U Ri")
+                        self.move("yi")
                     # Case 05
                     elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
                         self.move("R F U R Ui Ri Fi Ui Ri")
+                        self.move("yi")
                     # Case 06
                     elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
                         self.move("yi Ri Ui R U Ri Ui R")
                     # Case 07
                     elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("R Ui Ri U R Ui Ri")
+                        self.move("yi")
                 # If the corner is white side right
                 elif corner.ycol == bottom_color:
                     # Case 08
                     if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
                         self.move("R Ui Ri U R Ui Ui Ri U R Ui Ri")
+                        self.move("yi")
                     # Case 09
                     elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
                         self.move("R U F R U Ri Ui Fi Ri")
+                        self.move("yi")
                     # Case 10
                     elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
                         self.move("yi Ri U R Ui Ri U R")
                     # Case 11
                     elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("R U Ri Ui R U Ri")
+                        self.move("yi")
             # If corner is in front-right-top corner
             elif corner.pos() == (1, 1, 1):
                 # If the corner is white side up
@@ -436,6 +462,7 @@ class Cube:
                     # Case 12
                     if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
                         self.move("R U Ri Ui R U Ri Ui R U Ri")
+                        self.move("yi")
                     # Case 13
                     elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
                         self.move("R Ui Ri U yi Ri U R")
@@ -451,23 +478,29 @@ class Cube:
                     # Case 17
                     elif edge.pos() == (0, 1, 1) and edge.ycol == front_color:
                         self.move("F U R Ui Ri Fi R Ui Ri")
+                        self.move("yi")
                     # Case 18
                     elif edge.pos() == (1, 0, 1) and edge.xcol == right_color:
                         self.move("U R Ui Ri Ui R Ui Ri U R Ui Ri")
+                        self.move("yi")
                     # Case 19
                     elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
                         self.move("R Ui Ri U U R U Ri")
+                        self.move("yi")
                     # Case 20
                     elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
                         self.move("U R Ui Ui Ri U R Ui Ri")
+                        self.move("yi")
                     # Case 21
                     elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("R Ui Ui Ri Ui R U Ri")
+                        self.move("yi")
                 # If corner is white side front
                 elif corner.xcol == bottom_color:
                     # Case 22
                     if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
                         self.move("Ui R Ui Ri U U R Ui Ri")
+                        self.move("yi")
                     # Case 23
                     elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
                         self.move("Ui R U Ri yi U Ri Ui R")
@@ -489,20 +522,25 @@ class Cube:
                     # Case 29
                     elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
                         self.move("Ui R Ui Ui Ri U U R Ui Ri")
+                        self.move("yi")
                     # Case 30
                     elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
                         self.move("Ui R U Ri Ui R Ui Ui Ri")
+                        self.move("yi")
                     # Case 31
                     elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("U R Ui Ri")
+                        self.move("yi")
                 # If corner is white side right
                 elif corner.ycol == bottom_color:
                     # Case 32
                     if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
                         self.move("Ui R Ui Ui Ri U R U Ri")
+                        self.move("yi")
                     # Case 33
                     elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
                         self.move("yi U Ri Ui R y Ui R U Ri")  # y Ui == di
+                        self.move("yi")
                     # Case 34
                     elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
                         self.move("yi Ui Ri U R")
@@ -518,19 +556,22 @@ class Cube:
                     # Case 38
                     elif edge.pos() == (1, 0, 1) and edge.xcol == right_color:
                         self.move("R Ui Ri U R Ui Ri U U R Ui Ri")
+                        self.move("yi")
                     # Case 39
                     elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
                         self.move("Ui R U Ri U R U Ri")
+                        self.move("yi")
                     # Case 40
                     elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
                         self.move("R U Ri")
+                        self.move("yi")
                     # Case 41
                     elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("Ui R Ui Ri U R U Ri")
+                        self.move("yi")
 
-            # Now that a pair has been placed, increment pairs solved and turn cube
+            # Now that a pair has been placed, increment pairs solved
             pairs_solved += 1
-            self.yi(False)
 
     def oll(self):
         return
