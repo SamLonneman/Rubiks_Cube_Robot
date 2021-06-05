@@ -281,10 +281,12 @@ class Cube:
     def solve_color_agnostically(self):
         scrambled_cube = deep_copy(self)
         self.solve()
+        print(self)
         for orientation in "x", "x x", "xi", "y xi", "yi xi":
             new_cube = deep_copy(scrambled_cube)
             new_cube.move(orientation, False)
             new_cube.solve()
+            print(new_cube)
             if new_cube.move_count < self.move_count:
                 self.__dict__ = new_cube.__dict__
 
@@ -366,6 +368,7 @@ class Cube:
         # Set up variables
         pairs_solved = 0
         bottom_color = self.find_by_pos(0, 0, -1).zcol
+        fail_count = 0
 
         # Repeat until all four sides are finished
         while pairs_solved < 4:
@@ -376,10 +379,18 @@ class Cube:
             corner = self.find_by_col(front_color, right_color, bottom_color)
             edge = self.find_by_col(front_color, right_color, None)
 
-            # If at least one of the pair is tied up somewhere else or the pair is solved, turn cube and continue
-            if (edge.zpos == 0 and edge.pos() != (1, 1, 0) or corner.zpos == -1 and corner.pos() != (1, 1, -1)) or\
-                    (corner.pos() == (1, 1, -1) and corner.zcol == bottom_color and edge.pos() == (1, 1, 0) and
-                     edge.xcol == front_color):
+            # If at least one of the pair is tied up somewhere else, turn cube and continue
+            if edge.zpos == 0 and edge.pos() != (1, 1, 0) or corner.zpos == -1 and corner.pos() != (1, 1, -1):
+                fail_count += 1
+                if fail_count == 4:
+                    self.move("R U Ri")
+                    fail_count = 0
+                self.yi(False)
+                continue
+
+            # If the piece is solved, turn cube and continue
+            if corner.pos() == (1, 1, -1) and corner.zcol == bottom_color and \
+                    edge.pos() == (1, 1, 0) and edge.xcol == front_color:
                 self.yi(False)
                 continue
 
@@ -399,7 +410,7 @@ class Cube:
                         self.U()
                     elif edge.pos() == (0, -1, 1):
                         self.move("U U")
-            elif corner.zpos == 1 and edge.zpos == 1:
+            elif corner.zpos == 1:
                 if corner.pos() == (1, -1, 1):
                     self.Ui()
                 elif corner.pos() == (-1, 1, 1):
