@@ -361,6 +361,7 @@ class Cube:
             # If at least one of the pair is tied up somewhere else, turn cube and continue
             if edge.zpos == 0 and edge.pos() != (1, 1, 0) or corner.zpos == -1 and corner.pos() != (1, 1, -1):
                 self.yi(False)
+                pairs_solved += 1
                 continue
 
             # Orient the top face appropriately
@@ -428,6 +429,40 @@ class Cube:
                     # Case 11
                     elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
                         self.move("R U Ri Ui R U Ri")
+            # If corner is in front-right-top corner
+            elif corner.pos() == (1, 1, 1):
+                # If the corner is white side up
+                if corner.zcol == bottom_color:
+                    # Case 12
+                    if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
+                        self.move("R U Ri Ui R U Ri Ui R U Ri")
+                    # Case 13
+                    elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
+                        self.move("R Ui Ri U yi Ri U R")
+                    # Case 14
+                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
+                        self.move("yi Ri U U R U Ri Ui R")
+                    # Case 15
+                    elif edge.pos() == (0, -1, 1) and edge.ycol == front_color:
+                        self.move("yi Ui Ri U U R Ui Ri U R")
+                    # Case 16
+                    elif edge.pos() == (-1, 0, 1) and edge.xcol == front_color:
+                        self.move("yi Ri U R Ui Ui Ri Ui R")
+                    # Case 17
+                    elif edge.pos() == (0, 1, 1) and edge.ycol == front_color:
+                        self.move("F U R Ui Ri Fi R Ui Ri")
+                    # Case 18
+                    elif edge.pos() == (1, 0, 1) and edge.xcol == right_color:
+                        self.move("U R Ui Ri Ui R Ui Ri U R Ui Ri")
+                    # Case 19
+                    elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
+                        self.move("R Ui Ri U U R U Ri")
+                    # Case 20
+                    elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
+                        self.move("U R Ui Ui Ri U R Ui Ri")
+                    # Case 21
+                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
+                        self.move("R Ui Ui Ri Ui R U Ri")
 
             # Now that a pair has been placed, increment pairs solved and turn cube
             pairs_solved += 1
