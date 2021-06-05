@@ -267,8 +267,8 @@ class Cube:
             p.ycol, p.zcol = p.zcol, p.ycol
 
     def solve(self):
-        self.cross()
-        self.f2l()
+        self.cross()  # 8.05 moves average
+        self.f2l()  # 33.98 moves average
         # self.oll()
         # self.pll()
 
