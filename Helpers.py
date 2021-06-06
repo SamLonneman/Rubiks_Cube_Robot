@@ -3,6 +3,7 @@ def read_file(input_file):
     input_file = open(input_file, "r")
     return create_cubestring(input_file.read())
 
+
 # Currently, this method removes xyz rotations from the solution sequence.
 # Eventually, the goal is that this method will also convert all remaining
 # Moves into their equivalents when xyz rotations are removed.
@@ -14,6 +15,7 @@ def sequence_scrubber(sequence):
     return " ".join(result)
 
 
+# Creates a cubestring from a readable string
 def create_cubestring(readable_string):
     color_strips = readable_string.split()
     copy = color_strips.copy()
@@ -32,9 +34,74 @@ def create_cubestring(readable_string):
     return ''.join(color_strips)
 
 
+# Cubestring of a solved cube
 SOLVED = "yyyyyyyyyrrrrrrrrrgggggggggooooooooobbbbbbbbbwwwwwwwww"
 
-SCRAMBLES = """Fi U B Di F L D B D Li U Bi U Fi Bi Ri B R F L U D B F Ri
+# Dictionary containing all OLL cases and their algorithms
+OLL_ALGORITHMS = {
+    # "<OLL Configuration>": "<Corresponding Algorithm>"
+    "000011100111001110000": "",  # Case 00: OLL skip
+    "010100011010110001010": "R Ui Ui Ri Ri F R Fi U U Ri F R Fi",  # Case 01
+    "011100001010110000011": "F R U Ri Ui Fi f R U Ri Ui fi",  # Case 02
+    "110000011010110010010": "f R U Ri Ui fi Ui F R U Ri Ui Fi",  # Case 03
+    "010100101010100001110": "f R U Ri Ui fi U F R U Ri Ui Fi",  # Case 04
+    "110000011011010110000": "ri U U R U Ri U r",  # Case 05
+    "000101101011000001110": "r Ui Ui Ri Ui R Ui ri",  # Case 06
+    "100001010110101000011": "r U Ri U R Ui Ui ri",  # Case 07
+    "011010000110100101100": "ri Ui R Ui Ri U U r",  # Case 08
+    "001101000110100010110": "R U Ri Ui Ri F R R U Ri Ui Fi",  # Case 09
+    "110000100110110100001": "R U Ri U Ri F R Fi R Ui Ui Ri",  # Case 10
+    "110000011011001100001": "ri R R U Ri U R Ui Ui Ri U Mi",  # Case 11
+    "001011001011000001110": "Mi Ri Ui R Ui Ri U U R Ui M",  # Case 12
+    "110000100111010000011": "f R U R R Ui Ri U R Ui fi",  # Case 13
+    "011100000111000010110": "Ri F R U Ri Fi R F Ui Fi",  # Case 14
+    "110000010111010010010": "ri Ui r Ri Ui R U ri U r",  # Case 15
+    "010100100111000001110": "r U ri R U Ri Ui r Ui ri",  # Case 16
+    "011010001010110010010": "l Ui li f R R B Ri U Ri Ui fi",  # Case 17
+    "010010101010100000111": "r U Ri U R Ui Ui ri ri Ui R Ui Ri U r r",  # Case 18
+    "010010101010110001010": "ri R U R U Ri Ui r Ri Ri F R Fi",  # Case 19
+    "010010101010101010010": "r U Ri Ui Mi Mi U R Ui Ri Ui Mi",  # Case 20
+    "101001000111000100101": "R Ui Ui Ri Ui R U Ri Ui R Ui Ri",  # Case 21
+    "001101000111010100001": "R Ui Ui Ri Ri Ui R R Ui Ri Ri Ui Ui R",  # Case 22
+    "101001000111001110000": "R R Di R Ui Ui Ri D R Ui Ui R",  # Case 23
+    "100001100111000110100": "r U Ri Ui ri F R Fi",  # Case 24
+    "000101100111001100001": "Fi r U Ri Ui ri F R",  # Case 25
+    "000101100111000101100": "R Ui Ui Ri Ui R Ui Ri",  # Case 26
+    "100001010111001100001": "R U Ri U R Ui Ui Ri",  # Case 27
+    "000011100110101010010": "r U Ri Ui ri R U R Ui Ri",  # Case 28
+    "100001100110100010110": "R U Ri Ui R Ui Ri Fi Ui F R U Ri",  # Case 29
+    "010010101011010101000": "f R U R R Ui Ri U R R Ui Ri fi",  # Case 30
+    "011010000110101100001": "ri Fi U F r Ui ri Ui r",  # Case 31
+    "110000101011000110100": "R U Bi Ui Ri U R B Ri",  # Case 32
+    "110000100111000010110": "R U Ri Ui Ri F R Fi",  # Case 33
+    "010100010111001010010": "R U R R Ui Ri F R U R Ui Fi",  # Case 34
+    "010010011011000110100": "R Ui Ui Ri Ri F R Fi R Ui Ui Ri",  # Case 35
+    "010010010110100110100": "Ri Ui R Ui Ri U R U R Bi Ri B",  # Case 36   #Last four moves edited by me
+    "000011010110100010110": "F R Ui Ri Ui R U Ri Fi",  # Case 37
+    "100001100110101001010": "R U Ri U R Ui Ri Ui Ri F R Fi",  # Case 38
+    "010100100111001000011": "R U Ri Fi Ui F U R U U Ri",  # Case 39
+    "011010000111010010010": "Ri F R U Ri Ui Fi U R",  # Case 40
+    "101001000110101010010": "R U Ri U R Ui Ui Ri F R U Ri Ui Fi",  # Case 41
+    "010010100110100100101": "Ri Ui R Ui Ri U U R F R U Ri Ui Fi",  # Case 42
+    "010010010110101101000": "Bi Ui Ri U R B",  # Case 43
+    "010100101011010110000": "f R U Ri Ui fi",  # Case 44
+    "010100100111010010010": "F R U Ri Ui Fi",  # Case 45
+    "000011011010101101000": "Ri Ui Ri F R Fi U R",  # Case 46
+    "100001011011000001110": "bi Ui Ri U R Ui Ri U R b",  # Case 47
+    "001101000110110000011": "F R U Ri Ui R U Ri Ui Fi",  # Case 48
+    "110000010110100101100": "R Bi Ri Ri F R R B Ri Ri Fi R",  # Case 49
+    "011100001011010100001": "ri U r r Ui ri ri Ui r r U ri",  # Case 50
+    "011100000111010000011": "f R U Ri Ui R U Ri Ui fi",  # Case 51
+    "001101001010110100001": "Ri Fi Ui F Ui R U Ri U R",  # Case 52
+    "111000000110100100101": "ri U U R U Ri Ui R U Ri U r",  # Case 53
+    "101001000110100000111": "r Ui Ui Ri Ui R U Ri Ui R Ui ri",  # Case 54
+    "111000000111000000111": "r Ui Ui Ri Ui ri R R U Ri Ui r Ui ri",  # Case 55
+    "010100010111010001010": "r U ri U R Ui Ri U R Ui Ri r Ui ri",  # Case 56
+    "010010100111001010010": "R U Ri Ui Mi U R Ui ri"  # Case 57
+}
+
+# 150 randomly generated turn sequences for scrambling cubes
+SAMPLE_SCRAMBLES = """Fi U B Di F L D B D Li U Bi U Fi Bi Ri B R F L U D B F Ri
 U D R B R U L D U R B U R B L Ui D Bi Di Ri U L U D R
 R F D U B U D B Li B F Ri D B D L Fi Ui L U Fi D U F L
 Bi U D R L Bi R Di U F D F R U L Di F R U Fi D Ui Bi F Ui

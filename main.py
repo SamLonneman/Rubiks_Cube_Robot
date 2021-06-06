@@ -1,5 +1,5 @@
 from Cube import Cube
-from Helpers import SOLVED, SCRAMBLES
+from Helpers import SOLVED, SAMPLE_SCRAMBLES
 from time import time as current_time
 
 # Start the timer just to flex
@@ -8,7 +8,7 @@ start_time = current_time()
 # Mega Tester
 sum_moves = 0
 cubes_tested = 0
-for scramble in SCRAMBLES.split("\n")[:150]:
+for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     cube = Cube(SOLVED)
     cube.move(scramble, False)
     cube.solve_color_agnostically()
