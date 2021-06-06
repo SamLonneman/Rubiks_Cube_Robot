@@ -556,7 +556,26 @@ class Cube:
             unavailable_pairs.add((corner, edge))
 
     def oll(self):
-        return
+
+        # Setup oll configuration
+        config = str()
+        cubestring = self.cubestring()
+        top_color = self.find_by_pos(0, 0, 1).zcol
+        for i in 38, 37, 36, 9, 0, 1, 2, 29, 10, 3, 4, 5, 28, 11, 6, 7, 8, 27, 18, 19, 20:
+            config += '1' if cubestring[i] == top_color else '0'
+
+        while True:
+            # Case 01
+            if config == "010100011010110001010":
+                self.move("R Ui Ui Ri Ri F R Fi U U Ri F R Fi")
+                break
+            # Case 02
+            if config == "":
+                self.move("")
+                break
+            else:
+                self.yi()
+
 
     def pll(self):
         return
