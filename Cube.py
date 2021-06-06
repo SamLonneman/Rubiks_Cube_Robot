@@ -649,7 +649,7 @@ class Cube:
         "110000100111000010110": "R U Ri Ui Ri F R Fi",                      # Case 33
         "010100010111001010010": "R U R R Ui Ri F R U R Ui Fi",              # Case 34
         "010010011011000110100": "R Ui Ui Ri Ri F R Fi R Ui Ui Ri",          # Case 35
-        "010010010110100110100": "Ri Ui R Ui Ri U R U l Ui Ri U",            # Case 36
+        "010010010110100110100": "Ri Ui R Ui Ri U R U R Bi Ri B",            # Case 36   #Last four moves edited by me
         "000011010110100010110": "F R Ui Ri Ui R U Ri Fi",                   # Case 37
         "100001100110101001010": "R U Ri U R Ui Ri Ui Ri F R Fi",            # Case 38
         "010100100111001000011": "R U Ri Fi Ui F U R U U Ri",                # Case 39
@@ -686,6 +686,7 @@ class Cube:
             # If a valid configuration, perform algorithm and break
             if configuration in self.oll_algorithms:
                 self.move(self.oll_algorithms[configuration])
+                print("Success with config:", configuration)
                 break
 
             # otherwise, turn the cube and continue
