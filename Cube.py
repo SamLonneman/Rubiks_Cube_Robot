@@ -110,12 +110,7 @@ class Cube:
     def cubestring(self):
         return create_cubestring(str(self))
 
-    # Performs series of turns from a string. Ex: "R Li Di U B"
-    def move(self, sequence, count_moves=True):
-        for turn in sequence.split():
-            getattr(self, turn)(count_moves)
-
-    # The following 12 functions each represent a different turn
+    # Regular turns
     def F(self, part_of_solution=True):
         if part_of_solution:
             self.move_count += 1
@@ -224,6 +219,7 @@ class Cube:
                 p.ypos, p.xpos = -p.xpos, p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
+    # Whole cube rotations
     def x(self, part_of_solution=True):
         if part_of_solution:
             self.solution_sequence += "x "
@@ -265,6 +261,48 @@ class Cube:
         for p in self.pieces:
             p.ypos, p.zpos = -p.zpos, p.ypos
             p.ycol, p.zcol = p.zcol, p.ycol
+
+    # Compound turns
+    def f(self, part_of_solution=True):
+        self.move("z B", part_of_solution)
+
+    def fi(self, part_of_solution=True):
+        self.move("Bi zi", part_of_solution)
+
+    def b(self, part_of_solution=True):
+        self.move("zi F", part_of_solution)
+
+    def bi(self, part_of_solution=True):
+        self.move("Fi z", part_of_solution)
+
+    def r(self, part_of_solution=True):
+        self.move("x L", part_of_solution)
+
+    def ri(self, part_of_solution=True):
+        self.move("Li xi", part_of_solution)
+
+    def l(self, part_of_solution=True):
+        self.move("xi R", part_of_solution)
+
+    def li(self, part_of_solution=True):
+        self.move("Ri x", part_of_solution)
+
+    def u(self, part_of_solution=True):
+        self.move("y D", part_of_solution)
+
+    def ui(self, part_of_solution=True):
+        self.move("Di yi", part_of_solution)
+
+    def d(self, part_of_solution=True):
+        self.move("y U", part_of_solution)
+
+    def di(self, part_of_solution=True):
+        self.move("Ui yi", part_of_solution)
+
+    # Performs series of turns from a string. Ex: "R Bi x zi f L l"
+    def move(self, sequence, count_moves=True):
+        for turn in sequence.split():
+            getattr(self, turn)(count_moves)
 
     def solve(self):
         self.cross()  # 8.05 moves average
