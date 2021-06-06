@@ -299,6 +299,24 @@ class Cube:
     def di(self, part_of_solution=True):
         self.move("Ui yi", part_of_solution)
 
+    def M(self, part_of_solution=True):
+        self.move("xi R Li", part_of_solution)
+
+    def Mi(self, part_of_solution=True):
+        self.move("L Ri x", part_of_solution)
+
+    def E(self, part_of_solution=True):
+        self.move("yi Di U", part_of_solution)
+
+    def Ei(self, part_of_solution=True):
+        self.move("Ui D y", part_of_solution)
+
+    def S(self, part_of_solution=True):
+        self.move("z Fi B", part_of_solution)
+
+    def Si(self, part_of_solution=True):
+        self.move("Bi F zi", part_of_solution)
+
     # Performs series of turns from a string. Ex: "R Bi x zi f L l"
     def move(self, sequence, count_moves=True):
         for turn in sequence.split():
