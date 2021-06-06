@@ -323,10 +323,10 @@ class Cube:
             getattr(self, turn)(count_moves)
 
     def solve(self):
-        self.cross()  # 8.05 moves average
-        self.f2l()  # 33.98 moves average
-        # self.oll()
-        # self.pll()
+        self.cross()  # 8.05  moves on average
+        self.f2l()    # 33.98 moves on average
+        self.oll()    # 10.25 moves on average
+        self.pll()
 
     def solve_color_agnostically(self):
         scrambled_cube = deep_copy(self)
@@ -686,7 +686,6 @@ class Cube:
             # If a valid configuration, perform algorithm and break
             if configuration in self.oll_algorithms:
                 self.move(self.oll_algorithms[configuration])
-                print("Success with config:", configuration)
                 break
 
             # otherwise, turn the cube and continue
