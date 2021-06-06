@@ -112,8 +112,8 @@ class Cube:
         return create_cubestring(str(self))
 
     # Regular turns
-    def F(self, part_of_solution=True):
-        if part_of_solution:
+    def F(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "F "
         for p in self.pieces:
@@ -121,8 +121,8 @@ class Cube:
                 p.ypos, p.zpos = p.zpos, -p.ypos
                 p.ycol, p.zcol = p.zcol, p.ycol
 
-    def Fi(self, part_of_solution=True):
-        if part_of_solution:
+    def Fi(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "Fi "
         for p in self.pieces:
@@ -130,8 +130,8 @@ class Cube:
                 p.ypos, p.zpos = -p.zpos, p.ypos
                 p.ycol, p.zcol = p.zcol, p.ycol
 
-    def B(self, part_of_solution=True):
-        if part_of_solution:
+    def B(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "B "
         for p in self.pieces:
@@ -139,8 +139,8 @@ class Cube:
                 p.ypos, p.zpos = -p.zpos, p.ypos
                 p.ycol, p.zcol = p.zcol, p.ycol
 
-    def Bi(self, part_of_solution=True):
-        if part_of_solution:
+    def Bi(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "Bi "
         for p in self.pieces:
@@ -148,8 +148,8 @@ class Cube:
                 p.ypos, p.zpos = p.zpos, -p.ypos
                 p.ycol, p.zcol = p.zcol, p.ycol
 
-    def R(self, part_of_solution=True):
-        if part_of_solution:
+    def R(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "R "
         for p in self.pieces:
@@ -157,8 +157,8 @@ class Cube:
                 p.xpos, p.zpos = -p.zpos, p.xpos
                 p.xcol, p.zcol = p.zcol, p.xcol
 
-    def Ri(self, part_of_solution=True):
-        if part_of_solution:
+    def Ri(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "Ri "
         for p in self.pieces:
@@ -166,8 +166,8 @@ class Cube:
                 p.xpos, p.zpos = p.zpos, -p.xpos
                 p.xcol, p.zcol = p.zcol, p.xcol
 
-    def L(self, part_of_solution=True):
-        if part_of_solution:
+    def L(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "L "
         for p in self.pieces:
@@ -175,8 +175,8 @@ class Cube:
                 p.xpos, p.zpos = p.zpos, -p.xpos
                 p.xcol, p.zcol = p.zcol, p.xcol
 
-    def Li(self, part_of_solution=True):
-        if part_of_solution:
+    def Li(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "Li "
         for p in self.pieces:
@@ -184,8 +184,8 @@ class Cube:
                 p.xpos, p.zpos = -p.zpos, p.xpos
                 p.xcol, p.zcol = p.zcol, p.xcol
 
-    def U(self, part_of_solution=True):
-        if part_of_solution:
+    def U(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "U "
         for p in self.pieces:
@@ -193,8 +193,8 @@ class Cube:
                 p.ypos, p.xpos = -p.xpos, p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
-    def Ui(self, part_of_solution=True):
-        if part_of_solution:
+    def Ui(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "Ui "
         for p in self.pieces:
@@ -202,8 +202,8 @@ class Cube:
                 p.ypos, p.xpos = p.xpos, -p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
-    def D(self, part_of_solution=True):
-        if part_of_solution:
+    def D(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "D "
         for p in self.pieces:
@@ -211,8 +211,8 @@ class Cube:
                 p.ypos, p.xpos = p.xpos, -p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
-    def Di(self, part_of_solution=True):
-        if part_of_solution:
+    def Di(self, include_in_solution=True):
+        if include_in_solution:
             self.move_count += 1
             self.solution_sequence += "Di "
         for p in self.pieces:
@@ -221,102 +221,102 @@ class Cube:
                 p.ycol, p.xcol = p.xcol, p.ycol
 
     # Whole cube rotations
-    def x(self, part_of_solution=True):
-        if part_of_solution:
+    def x(self, include_in_solution=True):
+        if include_in_solution:
             self.solution_sequence += "x "
         for p in self.pieces:
             p.xpos, p.zpos = -p.zpos, p.xpos
             p.xcol, p.zcol = p.zcol, p.xcol
 
-    def xi(self, part_of_solution=True):
-        if part_of_solution:
+    def xi(self, include_in_solution=True):
+        if include_in_solution:
             self.solution_sequence += "xi "
         for p in self.pieces:
             p.xpos, p.zpos = p.zpos, -p.xpos
             p.xcol, p.zcol = p.zcol, p.xcol
 
-    def y(self, part_of_solution=True):
-        if part_of_solution:
+    def y(self, include_in_solution=True):
+        if include_in_solution:
             self.solution_sequence += "y "
         for p in self.pieces:
             p.ypos, p.xpos = -p.xpos, p.ypos
             p.ycol, p.xcol = p.xcol, p.ycol
 
-    def yi(self, part_of_solution=True):
-        if part_of_solution:
+    def yi(self, include_in_solution=True):
+        if include_in_solution:
             self.solution_sequence += "yi "
         for p in self.pieces:
             p.ypos, p.xpos = p.xpos, -p.ypos
             p.ycol, p.xcol = p.xcol, p.ycol
 
-    def z(self, part_of_solution=True):
-        if part_of_solution:
+    def z(self, include_in_solution=True):
+        if include_in_solution:
             self.solution_sequence += "z "
         for p in self.pieces:
             p.ypos, p.zpos = p.zpos, -p.ypos
             p.ycol, p.zcol = p.zcol, p.ycol
 
-    def zi(self, part_of_solution=True):
-        if part_of_solution:
+    def zi(self, include_in_solution=True):
+        if include_in_solution:
             self.solution_sequence += "zi "
         for p in self.pieces:
             p.ypos, p.zpos = -p.zpos, p.ypos
             p.ycol, p.zcol = p.zcol, p.ycol
 
     # Compound turns
-    def f(self, part_of_solution=True):
-        self.move("z B", part_of_solution)
+    def f(self, include_in_solution=True):
+        self.move("z B", include_in_solution)
 
-    def fi(self, part_of_solution=True):
-        self.move("Bi zi", part_of_solution)
+    def fi(self, include_in_solution=True):
+        self.move("Bi zi", include_in_solution)
 
-    def b(self, part_of_solution=True):
-        self.move("zi F", part_of_solution)
+    def b(self, include_in_solution=True):
+        self.move("zi F", include_in_solution)
 
-    def bi(self, part_of_solution=True):
-        self.move("Fi z", part_of_solution)
+    def bi(self, include_in_solution=True):
+        self.move("Fi z", include_in_solution)
 
-    def r(self, part_of_solution=True):
-        self.move("x L", part_of_solution)
+    def r(self, include_in_solution=True):
+        self.move("x L", include_in_solution)
 
-    def ri(self, part_of_solution=True):
-        self.move("Li xi", part_of_solution)
+    def ri(self, include_in_solution=True):
+        self.move("Li xi", include_in_solution)
 
-    def l(self, part_of_solution=True):
-        self.move("xi R", part_of_solution)
+    def l(self, include_in_solution=True):
+        self.move("xi R", include_in_solution)
 
-    def li(self, part_of_solution=True):
-        self.move("Ri x", part_of_solution)
+    def li(self, include_in_solution=True):
+        self.move("Ri x", include_in_solution)
 
-    def u(self, part_of_solution=True):
-        self.move("y D", part_of_solution)
+    def u(self, include_in_solution=True):
+        self.move("y D", include_in_solution)
 
-    def ui(self, part_of_solution=True):
-        self.move("Di yi", part_of_solution)
+    def ui(self, include_in_solution=True):
+        self.move("Di yi", include_in_solution)
 
-    def d(self, part_of_solution=True):
-        self.move("y U", part_of_solution)
+    def d(self, include_in_solution=True):
+        self.move("y U", include_in_solution)
 
-    def di(self, part_of_solution=True):
-        self.move("Ui yi", part_of_solution)
+    def di(self, include_in_solution=True):
+        self.move("Ui yi", include_in_solution)
 
-    def M(self, part_of_solution=True):
-        self.move("xi R Li", part_of_solution)
+    def M(self, include_in_solution=True):
+        self.move("xi R Li", include_in_solution)
 
-    def Mi(self, part_of_solution=True):
-        self.move("L Ri x", part_of_solution)
+    def Mi(self, include_in_solution=True):
+        self.move("L Ri x", include_in_solution)
 
-    def E(self, part_of_solution=True):
-        self.move("yi Di U", part_of_solution)
+    def E(self, include_in_solution=True):
+        self.move("yi Di U", include_in_solution)
 
-    def Ei(self, part_of_solution=True):
-        self.move("Ui D y", part_of_solution)
+    def Ei(self, include_in_solution=True):
+        self.move("Ui D y", include_in_solution)
 
-    def S(self, part_of_solution=True):
-        self.move("z Fi B", part_of_solution)
+    def S(self, include_in_solution=True):
+        self.move("z Fi B", include_in_solution)
 
-    def Si(self, part_of_solution=True):
-        self.move("Bi F zi", part_of_solution)
+    def Si(self, include_in_solution=True):
+        self.move("Bi F zi", include_in_solution)
 
     # Performs series of turns from a string. Ex: "R Bi x zi f L l"
     def move(self, sequence, count_moves=True):
