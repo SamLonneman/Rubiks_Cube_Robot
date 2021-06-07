@@ -104,27 +104,27 @@ OLL_ALGORITHMS = {
 PLL_ALGORITHMS = {
     # "<PLL Configuration>": "<Corresponding Algorithm>"
     "------------": "",  # Case 00: PLL skip
-    "-----fl---r-": "",  # Case 01
-    "-----rf---l-": "",  # Case 02
-    "-f---rl---b-": "",  # Case 03
-    "-r---fb---l-": "",  # Case 04
-    "--r-f--rfb-l": "",  # Case 05
-    "--f-l--fbr-r": "",  # Case 06
-    "l-rff--bbl-r": "",  # Case 07
-    "--r-frl-b--r": "",  # Case 08
-    "-fr-f---b-br": "",  # Case 09
-    "fr-r--b-l--b": "",  # Case 10
-    "fl-r-b--l--b": "",  # Case 11
-    "------fffrrl": "",  # Case 12
-    "--r-f-f-b-rr": "",  # Case 13
-    "r-lbb-f---r-": "",  # Case 14
-    "-lr-fb--b--r": "",  # Case 15
-    "l--f-rfflrlb": "",  # Case 16
-    "rlfblf-b-lb-": "",  # Case 17
-    "rlfblrbb-l--": "",  # Case 18
-    "lf-f-b-flrlb": "",  # Case 19
-    "f--r-rl-l--b": "",  # Case 20
-    "--f-lrlr-b--": ""   # Case 21
+    "-----fl---r-": "R Ui R U R U R Ui Ui Ui Ri Ri",  # Case 01
+    "-----rf---l-": "R R U R U Ri Ui Ri Ui Ri U Ri",  # Case 02
+    "-f---rl---b-": "Mi Mi U Mi Mi U U Mi Mi U Mi Mi",  # Case 03
+    "-r---fb---l-": "Mi U Mi Mi U Mi Mi U Mi U U Mi Mi Ui",  # Case 04
+    "--r-f--rfb-l": "xi R R D D Ri Ui R D D Ri U Ri",  # Case 05
+    "--f-l--fbr-r": "xi R Ui R D D Ri U R D D Ri Ri",  # Case 06
+    "l-rff--bbl-r": "xi R Ui Ri D R U Ri Di R U Ri D R Ui Ri Di",  # Case 07
+    "--r-frl-b--r": "R U Ri Ui Ri F R R Ui Ri Ui R U Ri Fi",  # Case 08
+    "-fr-f---b-br": "Ri Ui Fi R U Ri Ui Ri F R R Ui Ri Ui R U Ri U R",  # Case 09
+    "fr-r--b-l--b": "Ri U Ri di Ri Fi R R Ui Ri U Ri F R F",  # Case 10
+    "fl-r-b--l--b": "F R Ui Ri Ui R U Ri Fi R U Ri Ui Ri F R Fi",  # Case 11
+    "------fffrrl": "z Ui R Di R R U Ri Ui R R U D Ri",  # Case 12
+    "--r-f-f-b-rr": "R U Ri Fi R U Ri Ui Ri F R R Ui Ri Ui",  # Case 13
+    "r-lbb-f---r-": "Ri U U R Ui Ui Ri F R U Ri Ui Ri Fi R R Ui",  # Case 14
+    "-lr-fb--b--r": "R Ui Ri Ui R U R D Ri Ui R Di Ri U U Ri Ui",  # Case 15
+    "l--f-rfflrlb": "Ri Ri ui R Ui R U Ri u R R f Ri fi",  # Case 16
+    "rlfblf-b-lb-": "R U Ri yi R R ui R Ui Ri U Ri u R R",  # Case 17
+    "rlfblrbb-l--": "R R u Ri U Ri Ui R ui Ri Ri Fi U F",  # Case 18
+    "lf-f-b-flrlb": "Ri di F R R u Ri U R Ui R ui Ri Ri",  # Case 19
+    "f--r-rl-l--b": "Ri U R Ui Ri Fi Ui F R U Ri F Ri Fi R Ui R",  # Case 20
+    "--f-lrlr-b--": "R U Ri U R U Ri F R U Ri Ui Ri F R R Ui Ri U U R Ui Ri"   # Case 21
 }
 
 # 150 randomly generated turn sequences for scrambling cubes
