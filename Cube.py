@@ -655,6 +655,7 @@ class Cube:
     # Permute the last layer
     def pll(self):
 
+        orientations_checked = 0
         while True:
             # Get PLL Configuration
             configuration = self.get_pll_configuration()
@@ -666,4 +667,8 @@ class Cube:
 
             # otherwise, turn the cube and continue
             else:
-                self.yi()
+                self.y()
+                orientations_checked += 1
+                if orientations_checked == 4:
+                    self.U()
+                    orientations_checked = 0
