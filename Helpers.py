@@ -103,28 +103,28 @@ OLL_ALGORITHMS = {
 # Dictionary containing all PLL cases and their algorithms
 PLL_ALGORITHMS = {
     # "<PLL Configuration>": "<Corresponding Algorithm>"
-    "": "",  # Case 00: PLL skip
-    "": "",  # Case 01
-    "": "",  # Case 02
-    "": "",  # Case 03
-    "": "",  # Case 04
-    "": "",  # Case 05
-    "": "",  # Case 06
-    "": "",  # Case 07
-    "": "",  # Case 08
-    "": "",  # Case 09
-    "": "",  # Case 10
-    "": "",  # Case 11
-    "": "",  # Case 12
-    "": "",  # Case 13
-    "": "",  # Case 14
-    "": "",  # Case 15
-    "": "",  # Case 16
-    "": "",  # Case 17
-    "": "",  # Case 18
-    "": "",  # Case 19
-    "": "",  # Case 20
-    "": "",  # Case 21
+    "------------": "",  # Case 00: PLL skip
+    "-----fl---r-": "",  # Case 01
+    "-----rf---l-": "",  # Case 02
+    "-f---rl---b-": "",  # Case 03
+    "-r---fb---l-": "",  # Case 04
+    "--r-f--rfb-l": "",  # Case 05
+    "--f-l--fbr-r": "",  # Case 06
+    "l-rff--bbl-r": "",  # Case 07
+    "--r-frl-b--r": "",  # Case 08
+    "-fr-f---b-br": "",  # Case 09
+    "fr-r--b-l--b": "",  # Case 10
+    "fl-r-b--l--b": "",  # Case 11
+    "------fffrrl": "",  # Case 12
+    "--r-f-f-b-rr": "",  # Case 13
+    "r-lbb-f---r-": "",  # Case 14
+    "-lr-fb--b--r": "",  # Case 15
+    "l--f-rfflrlb": "",  # Case 16
+    "rlfblf-b-lb-": "",  # Case 17
+    "rlfblrbb-l--": "",  # Case 18
+    "lf-f-b-flrlb": "",  # Case 19
+    "f--r-rl-l--b": "",  # Case 20
+    "--f-lrlr-b--": ""   # Case 21
 }
 
 # 150 randomly generated turn sequences for scrambling cubes
