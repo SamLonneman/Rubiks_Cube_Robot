@@ -104,7 +104,7 @@ OLL_ALGORITHMS = {
 PLL_ALGORITHMS = {
     # "<PLL Configuration>": "<Corresponding Algorithm>"
     "------------": "",  # Case 00: PLL skip
-    "-----fl---r-": "R Ui R U R U R Ui Ui Ui Ri Ri",  # Case 01
+    "-----fl---r-": "R Ui R U R U R Ui Ri Ui Ri Ri",  # Case 01
     "-----rf---l-": "R R U R U Ri Ui Ri Ui Ri U Ri",  # Case 02
     "-f---rl---b-": "Mi Mi U Mi Mi U U Mi Mi U Mi Mi",  # Case 03
     "-r---fb---l-": "Mi U Mi Mi U Mi Mi U Mi U U Mi Mi Ui",  # Case 04
@@ -124,7 +124,7 @@ PLL_ALGORITHMS = {
     "rlfblrbb-l--": "R R u Ri U Ri Ui R ui Ri Ri Fi U F",  # Case 18
     "lf-f-b-flrlb": "Ri di F R R u Ri U R Ui R ui Ri Ri",  # Case 19
     "f--r-rl-l--b": "Ri U R Ui Ri Fi Ui F R U Ri F Ri Fi R Ui R",  # Case 20
-    "--f-lrlr-b--": "R U Ri U R U Ri F R U Ri Ui Ri F R R Ui Ri U U R Ui Ri"   # Case 21
+    "--f-lrlr-b--": "R U Ri U R U Ri Fi R U Ri Ui Ri F R R Ui Ri U U R Ui Ri"   # Case 21
 }
 
 # 150 randomly generated turn sequences for scrambling cubes
