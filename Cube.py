@@ -323,19 +323,19 @@ class Cube:
         for turn in sequence.split():
             getattr(self, turn)(count_moves)
 
-    def solve(self):
+    def cfop(self):
         self.cross()  # 8.05  moves on average
         self.f2l()    # 33.98 moves on average
         self.oll()    # 10.25 moves on average
-        self.pll()
+        self.pll()    # 15.29 moves on average
 
-    def solve_color_agnostically(self):
+    def solve(self):
         scrambled_cube = deep_copy(self)
-        self.solve()
-        for orientation in "x", "x x", "xi", "y xi", "yi xi":
+        self.cfop()
+        for orienting_sequence in "x", "x x", "xi", "y xi", "yi xi":
             new_cube = deep_copy(scrambled_cube)
-            new_cube.move(orientation)
-            new_cube.solve()
+            new_cube.move(orienting_sequence)
+            new_cube.cfop()
             if new_cube.move_count < self.move_count:
                 self.__dict__ = new_cube.__dict__
 
@@ -632,42 +632,39 @@ class Cube:
             else:
                 self.yi()
 
-    # Return the PLL configuration
-    def get_pll_configuration(self):
-        # Determine current PLL configuration
-        configuration = str()
-        cubestring = self.cubestring()
-        back_color = self.find_by_pos(-1, 0, 0).xcol
-        front_color = self.find_by_pos(1, 0, 0).xcol
-        left_color = self.find_by_pos(0, -1, 0).ycol
-        right_color = self.find_by_pos(0, 1, 0).ycol
-        for i in 38, 37, 36, 9, 29, 10, 28, 11, 27, 18, 19, 20:
-            if cubestring[i] == back_color:
-                configuration += "-" if i in (36, 37, 38) else "b"
-            elif cubestring[i] == left_color:
-                configuration += "-" if i in (9, 10, 11) else "l"
-            elif cubestring[i] == front_color:
-                configuration += "-" if i in (18, 19, 20) else "f"
-            elif cubestring[i] == right_color:
-                configuration += "-" if i in (27, 28, 29) else "r"
-        return configuration
-
     # Permute the last layer
     def pll(self):
 
         orientations_checked = 0
         while True:
-            # Get PLL Configuration
-            configuration = self.get_pll_configuration()
+
+            # Determine current PLL configuration
+            configuration = str()
+            cubestring = self.cubestring()
+            back_color = self.find_by_pos(-1, 0, 0).xcol
+            front_color = self.find_by_pos(1, 0, 0).xcol
+            left_color = self.find_by_pos(0, -1, 0).ycol
+            right_color = self.find_by_pos(0, 1, 0).ycol
+            for i in 38, 37, 36, 9, 29, 10, 28, 11, 27, 18, 19, 20:
+                if cubestring[i] == back_color:
+                    configuration += "-" if i in (36, 37, 38) else "b"
+                elif cubestring[i] == left_color:
+                    configuration += "-" if i in (9, 10, 11) else "l"
+                elif cubestring[i] == front_color:
+                    configuration += "-" if i in (18, 19, 20) else "f"
+                elif cubestring[i] == right_color:
+                    configuration += "-" if i in (27, 28, 29) else "r"
 
             # If a valid configuration, perform algorithm and break
             if configuration in PLL_ALGORITHMS:
                 self.move(PLL_ALGORITHMS[configuration])
                 break
 
-            # otherwise, turn the cube and continue
+            # otherwise, rotate whole cube and continue
             else:
                 self.y()
+
+                # If all orientations have been checked, make a U turn
                 orientations_checked += 1
                 if orientations_checked == 4:
                     self.U()

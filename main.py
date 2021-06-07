@@ -11,7 +11,7 @@ cubes_tested = 0
 for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     cube = Cube(SOLVED)
     cube.move(scramble, False)
-    cube.solve_color_agnostically()
+    cube.solve()
     sum_moves += cube.move_count
     cubes_tested += 1
 
