@@ -1,5 +1,5 @@
 from copy import deepcopy as deep_copy
-from Helpers import create_cubestring, OLL_ALGORITHMS
+from Helpers import create_cubestring, OLL_ALGORITHMS, PLL_ALGORITHMS
 
 
 class Piece:
@@ -632,6 +632,38 @@ class Cube:
             else:
                 self.yi()
 
+    # Return the PLL configuration
+    def get_pll_configuration(self):
+        # Determine current PLL configuration
+        configuration = str()
+        cubestring = self.cubestring()
+        back_color = self.find_by_pos(-1, 0, 0).xcol
+        front_color = self.find_by_pos(1, 0, 0).xcol
+        left_color = self.find_by_pos(0, -1, 0).ycol
+        right_color = self.find_by_pos(0, 1, 0).ycol
+        for i in 38, 37, 36, 9, 29, 10, 28, 11, 27, 18, 19, 20:
+            if cubestring[i] == back_color:
+                configuration += "-" if i in (36, 37, 38) else "b"
+            elif cubestring[i] == left_color:
+                configuration += "-" if i in (9, 10, 11) else "l"
+            elif cubestring[i] == front_color:
+                configuration += "-" if i in (18, 19, 20) else "f"
+            elif cubestring[i] == right_color:
+                configuration += "-" if i in (27, 28, 29) else "r"
+        return configuration
+
     # Permute the last layer
     def pll(self):
-        return
+
+        while True:
+            # Get PLL Configuration
+            configuration = self.get_pll_configuration()
+
+            # If a valid configuration, perform algorithm and break
+            if configuration in PLL_ALGORITHMS:
+                self.move(PLL_ALGORITHMS[configuration])
+                break
+
+            # otherwise, turn the cube and continue
+            else:
+                self.yi()
