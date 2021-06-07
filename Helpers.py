@@ -100,6 +100,33 @@ OLL_ALGORITHMS = {
     "010010100111001010010": "R U Ri Ui Mi U R Ui ri"  # Case 57
 }
 
+# Dictionary containing all PLL cases and their algorithms
+PLL_ALGORITHMS = {
+    # "<PLL Configuration>": "<Corresponding Algorithm>"
+    "": "",  # Case 00: PLL skip
+    "": "",  # Case 01
+    "": "",  # Case 02
+    "": "",  # Case 03
+    "": "",  # Case 04
+    "": "",  # Case 05
+    "": "",  # Case 06
+    "": "",  # Case 07
+    "": "",  # Case 08
+    "": "",  # Case 09
+    "": "",  # Case 10
+    "": "",  # Case 11
+    "": "",  # Case 12
+    "": "",  # Case 13
+    "": "",  # Case 14
+    "": "",  # Case 15
+    "": "",  # Case 16
+    "": "",  # Case 17
+    "": "",  # Case 18
+    "": "",  # Case 19
+    "": "",  # Case 20
+    "": "",  # Case 21
+}
+
 # 150 randomly generated turn sequences for scrambling cubes
 SAMPLE_SCRAMBLES = """Fi U B Di F L D B D Li U Bi U Fi Bi Ri B R F L U D B F Ri
 U D R B R U L D U R B U R B L Ui D Bi Di Ri U L U D R
