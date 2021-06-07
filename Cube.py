@@ -295,10 +295,10 @@ class Cube:
         self.move("Di yi", include_in_solution)
 
     def d(self, include_in_solution=True):
-        self.move("y U", include_in_solution)
+        self.move("yi U", include_in_solution)
 
     def di(self, include_in_solution=True):
-        self.move("Ui yi", include_in_solution)
+        self.move("Ui y", include_in_solution)
 
     def M(self, include_in_solution=True):
         self.move("xi R Li", include_in_solution)
