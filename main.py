@@ -15,9 +15,10 @@ for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     sum_moves += cube.move_count
     cubes_tested += 1
 
-    # Test if oll was successful
+    # Test if cube is solved
     s = cube.cubestring()
-    if not (s[0] == s[1] == s[2] == s[3] == s[4] == s[5] == s[6] == s[7] == s[8]):
+    if not (s[0:9] == 9*s[0] and s[9:18] == 9*s[9] and s[18:27] == 9*s[18] and
+            s[27:36] == 9*s[27] and s[36:45] == 9*s[36] and s[45:54] == 9*s[45]):
         print("Test #", cubes_tested + 1, "failed.")
 
 print(cubes_tested, "tests completed in", round(current_time() - start_time, 3),
