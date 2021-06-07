@@ -58,7 +58,7 @@ OLL_ALGORITHMS = {
     "110000010111010010010": "ri Ui r Ri Ui R U ri U r",  # Case 15
     "010100100111000001110": "r U ri R U Ri Ui r Ui ri",  # Case 16
     "011010001010110010010": "l Ui li f R R B Ri U Ri Ui fi",  # Case 17
-    "010010101010100000111": "r U Ri U R Ui Ui ri ri Ui R Ui Ri U r r",  # Case 18
+    "010010101010100000111": "r U Ri U R Ui Ui ri ri Ui R Ui Ri U U r",  # Case 18
     "010010101010110001010": "ri R U R U Ri Ui r Ri Ri F R Fi",  # Case 19
     "010010101010101010010": "r U Ri Ui Mi Mi U R Ui Ri Ui Mi",  # Case 20
     "101001000111000100101": "R Ui Ui Ri Ui R U Ri Ui R Ui Ri",  # Case 21
