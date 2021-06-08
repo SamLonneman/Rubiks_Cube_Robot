@@ -20,7 +20,6 @@ for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     if s[0:9] == 9*s[0] and s[9:18] == 9*s[9] and s[18:27] == 9*s[18] and \
             s[27:36] == 9*s[27] and s[36:45] == 9*s[36] and s[45:54] == 9*s[45]:
         print("Cube #", cubes_tested, "solved.")
-        print(cube.solution_sequence)
     else:
         print("Cube #", cubes_tested, "FAILED.")
 
