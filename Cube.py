@@ -28,7 +28,6 @@ class Cube:
     def __init__(self, cstr):
 
         # A cube has three member variables
-        self.move_count = 0
         self.solution_sequence = str()
         self.pieces = set()
 
@@ -114,7 +113,6 @@ class Cube:
     # Regular turns
     def F(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "F "
         for p in self.pieces:
             if p.xpos == 1:
@@ -123,7 +121,6 @@ class Cube:
 
     def Fi(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "Fi "
         for p in self.pieces:
             if p.xpos == 1:
@@ -132,7 +129,6 @@ class Cube:
 
     def B(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "B "
         for p in self.pieces:
             if p.xpos == -1:
@@ -141,7 +137,6 @@ class Cube:
 
     def Bi(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "Bi "
         for p in self.pieces:
             if p.xpos == -1:
@@ -150,7 +145,6 @@ class Cube:
 
     def R(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "R "
         for p in self.pieces:
             if p.ypos == 1:
@@ -159,7 +153,6 @@ class Cube:
 
     def Ri(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "Ri "
         for p in self.pieces:
             if p.ypos == 1:
@@ -168,7 +161,6 @@ class Cube:
 
     def L(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "L "
         for p in self.pieces:
             if p.ypos == -1:
@@ -177,7 +169,6 @@ class Cube:
 
     def Li(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "Li "
         for p in self.pieces:
             if p.ypos == -1:
@@ -186,7 +177,6 @@ class Cube:
 
     def U(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "U "
         for p in self.pieces:
             if p.zpos == 1:
@@ -195,7 +185,6 @@ class Cube:
 
     def Ui(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "Ui "
         for p in self.pieces:
             if p.zpos == 1:
@@ -204,7 +193,6 @@ class Cube:
 
     def D(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "D "
         for p in self.pieces:
             if p.zpos == -1:
@@ -213,7 +201,6 @@ class Cube:
 
     def Di(self, include_in_solution=True):
         if include_in_solution:
-            self.move_count += 1
             self.solution_sequence += "Di "
         for p in self.pieces:
             if p.zpos == -1:
@@ -336,11 +323,10 @@ class Cube:
             new_cube = deep_copy(scrambled_cube)
             new_cube.move(orienting_sequence)
             new_cube.cfop()
-            if new_cube.move_count < self.move_count:
+            if len(new_cube.solution_sequence.split()) < len(self.solution_sequence.split()):
                 self.__dict__ = new_cube.__dict__
 
     def simplify_sequence(self):
-        print(self.solution_sequence)
         # Remove any full cube rotations and adjust all other moves accordingly
         moves = {
             'y': "U",
@@ -350,29 +336,29 @@ class Cube:
             'b': "B",
             'w': "D"
         }
-        scrubbed_sequence = ""
+        simplified_sequence = ""
         cube = Cube(SOLVED)
         for turn in self.solution_sequence.split():
             if 'y' in turn or 'x' in turn or 'z' in turn:
                 cube.move(turn)
             else:
                 if 'U' in turn:
-                    scrubbed_sequence += moves[cube.find_by_pos(0, 0, 1).zcol]
+                    simplified_sequence += moves[cube.find_by_pos(0, 0, 1).zcol]
                 elif 'L' in turn:
-                    scrubbed_sequence += moves[cube.find_by_pos(0, -1, 0).ycol]
+                    simplified_sequence += moves[cube.find_by_pos(0, -1, 0).ycol]
                 elif 'F' in turn:
-                    scrubbed_sequence += moves[cube.find_by_pos(1, 0, 1).xcol]
+                    simplified_sequence += moves[cube.find_by_pos(1, 0, 1).xcol]
                 elif 'R' in turn:
-                    scrubbed_sequence += moves[cube.find_by_pos(0, 1, 0).ycol]
+                    simplified_sequence += moves[cube.find_by_pos(0, 1, 0).ycol]
                 elif 'B' in turn:
-                    scrubbed_sequence += moves[cube.find_by_pos(-1, 0, 0).xcol]
+                    simplified_sequence += moves[cube.find_by_pos(-1, 0, 0).xcol]
                 elif 'D' in turn:
-                    scrubbed_sequence += moves[cube.find_by_pos(0, 0, -1).zcol]
+                    simplified_sequence += moves[cube.find_by_pos(0, 0, -1).zcol]
                 if 'i' in turn:
-                    scrubbed_sequence += 'i'
-                scrubbed_sequence += ' '
-        scrubbed_sequence = scrubbed_sequence[:-1]
-        self.solution_sequence = scrubbed_sequence
+                    simplified_sequence += 'i'
+                simplified_sequence += ' '
+        simplified_sequence = simplified_sequence[:-1]
+        self.solution_sequence = simplified_sequence
 
         # Repeatedly perform the two following transformations until they have no effect
         edit_made = True
@@ -380,21 +366,21 @@ class Cube:
             edit_made = False
 
             # Replace triple turns with single inverse turns
-            scrubbed_sequence = ""
+            simplified_sequence = ""
             turn_list = self.solution_sequence.split()
             i = 0
             while i < len(turn_list):
                 if i < len(turn_list) - 2 and turn_list[i] == turn_list[i + 1] == turn_list[i + 2]:
-                    scrubbed_sequence += turn_list[i] + "i "
+                    simplified_sequence += turn_list[i] + "i "
                     edit_made = True
                     i += 3
                 else:
-                    scrubbed_sequence += turn_list[i] + ' '
+                    simplified_sequence += turn_list[i] + ' '
                     i += 1
-            self.solution_sequence = scrubbed_sequence[:-1]
+            self.solution_sequence = simplified_sequence[:-1]
 
             # Delete useless trivial "undoing" moves such as "Ri R" or "F Fi"
-            scrubbed_sequence = ""
+            simplified_sequence = ""
             turn_list = self.solution_sequence.split()
             i = 0
             while i < len(turn_list):
@@ -403,9 +389,9 @@ class Cube:
                     edit_made = True
                     i += 2
                 else:
-                    scrubbed_sequence += turn_list[i] + ' '
+                    simplified_sequence += turn_list[i] + ' '
                     i += 1
-            self.solution_sequence = scrubbed_sequence[:-1]
+            self.solution_sequence = simplified_sequence[:-1]
 
     # Solve a cross on the bottom
     def cross(self):

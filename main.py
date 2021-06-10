@@ -12,7 +12,7 @@ for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     cube = Cube(SOLVED)
     cube.move(scramble, False)
     cube.solve()
-    sum_moves += cube.move_count
+    sum_moves += len(cube.solution_sequence.split())
     cubes_tested += 1
 
     # Test if cube is solved
