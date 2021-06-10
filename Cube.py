@@ -319,79 +319,14 @@ class Cube:
     def solve(self):
         scrambled_cube = deep_copy(self)
         self.cfop()
+        self.simplify_sequence()
         for orienting_sequence in "x", "x x", "xi", "y xi", "yi xi":
             new_cube = deep_copy(scrambled_cube)
             new_cube.move(orienting_sequence)
             new_cube.cfop()
+            self.simplify_sequence()
             if len(new_cube.solution_sequence.split()) < len(self.solution_sequence.split()):
                 self.__dict__ = new_cube.__dict__
-
-    def simplify_sequence(self):
-        # Remove any full cube rotations and adjust all other moves accordingly
-        moves = {
-            'y': "U",
-            'r': "L",
-            'g': "F",
-            'o': "R",
-            'b': "B",
-            'w': "D"
-        }
-        simplified_sequence = ""
-        cube = Cube(SOLVED)
-        for turn in self.solution_sequence.split():
-            if 'y' in turn or 'x' in turn or 'z' in turn:
-                cube.move(turn)
-            else:
-                if 'U' in turn:
-                    simplified_sequence += moves[cube.find_by_pos(0, 0, 1).zcol]
-                elif 'L' in turn:
-                    simplified_sequence += moves[cube.find_by_pos(0, -1, 0).ycol]
-                elif 'F' in turn:
-                    simplified_sequence += moves[cube.find_by_pos(1, 0, 1).xcol]
-                elif 'R' in turn:
-                    simplified_sequence += moves[cube.find_by_pos(0, 1, 0).ycol]
-                elif 'B' in turn:
-                    simplified_sequence += moves[cube.find_by_pos(-1, 0, 0).xcol]
-                elif 'D' in turn:
-                    simplified_sequence += moves[cube.find_by_pos(0, 0, -1).zcol]
-                if 'i' in turn:
-                    simplified_sequence += 'i'
-                simplified_sequence += ' '
-        simplified_sequence = simplified_sequence[:-1]
-        self.solution_sequence = simplified_sequence
-
-        # Repeatedly perform the two following transformations until they have no effect
-        edit_made = True
-        while edit_made:
-            edit_made = False
-
-            # Replace triple turns with single inverse turns
-            simplified_sequence = ""
-            turn_list = self.solution_sequence.split()
-            i = 0
-            while i < len(turn_list):
-                if i < len(turn_list) - 2 and turn_list[i] == turn_list[i + 1] == turn_list[i + 2]:
-                    simplified_sequence += turn_list[i] + "i "
-                    edit_made = True
-                    i += 3
-                else:
-                    simplified_sequence += turn_list[i] + ' '
-                    i += 1
-            self.solution_sequence = simplified_sequence[:-1]
-
-            # Delete useless trivial "undoing" moves such as "Ri R" or "F Fi"
-            simplified_sequence = ""
-            turn_list = self.solution_sequence.split()
-            i = 0
-            while i < len(turn_list):
-                if i < len(turn_list) - 1 and (
-                        turn_list[i] == turn_list[i + 1] + 'i' or turn_list[i] + 'i' == turn_list[i + 1]):
-                    edit_made = True
-                    i += 2
-                else:
-                    simplified_sequence += turn_list[i] + ' '
-                    i += 1
-            self.solution_sequence = simplified_sequence[:-1]
 
     # Solve a cross on the bottom
     def cross(self):
@@ -723,3 +658,71 @@ class Cube:
                 if orientations_checked == 4:
                     self.U()
                     orientations_checked = 0
+
+    # Simplify the sequence, removing full cube rotations, triple turns, and trivial undoings
+    def simplify_sequence(self):
+        # Remove any full cube rotations and adjust all other moves accordingly
+        moves = {
+            'y': "U",
+            'r': "L",
+            'g': "F",
+            'o': "R",
+            'b': "B",
+            'w': "D"
+        }
+        simplified_sequence = ""
+        cube = Cube(SOLVED)
+        for turn in self.solution_sequence.split():
+            if 'y' in turn or 'x' in turn or 'z' in turn:
+                cube.move(turn)
+            else:
+                if 'U' in turn:
+                    simplified_sequence += moves[cube.find_by_pos(0, 0, 1).zcol]
+                elif 'L' in turn:
+                    simplified_sequence += moves[cube.find_by_pos(0, -1, 0).ycol]
+                elif 'F' in turn:
+                    simplified_sequence += moves[cube.find_by_pos(1, 0, 1).xcol]
+                elif 'R' in turn:
+                    simplified_sequence += moves[cube.find_by_pos(0, 1, 0).ycol]
+                elif 'B' in turn:
+                    simplified_sequence += moves[cube.find_by_pos(-1, 0, 0).xcol]
+                elif 'D' in turn:
+                    simplified_sequence += moves[cube.find_by_pos(0, 0, -1).zcol]
+                if 'i' in turn:
+                    simplified_sequence += 'i'
+                simplified_sequence += ' '
+        simplified_sequence = simplified_sequence[:-1]
+        self.solution_sequence = simplified_sequence
+
+        # Repeatedly perform the two following transformations until they have no effect
+        edit_made = True
+        while edit_made:
+            edit_made = False
+
+            # Replace triple turns with single inverse turns
+            simplified_sequence = ""
+            turn_list = self.solution_sequence.split()
+            i = 0
+            while i < len(turn_list):
+                if i < len(turn_list) - 2 and turn_list[i] == turn_list[i + 1] == turn_list[i + 2]:
+                    simplified_sequence += turn_list[i] + "i "
+                    edit_made = True
+                    i += 3
+                else:
+                    simplified_sequence += turn_list[i] + ' '
+                    i += 1
+            self.solution_sequence = simplified_sequence[:-1]
+
+            # Delete useless trivial "undoing" moves such as "Ri R" or "F Fi"
+            simplified_sequence = ""
+            turn_list = self.solution_sequence.split()
+            i = 0
+            while i < len(turn_list):
+                if i < len(turn_list) - 1 and (
+                        turn_list[i] == turn_list[i + 1] + 'i' or turn_list[i] + 'i' == turn_list[i + 1]):
+                    edit_made = True
+                    i += 2
+                else:
+                    simplified_sequence += turn_list[i] + ' '
+                    i += 1
+            self.solution_sequence = simplified_sequence[:-1]
