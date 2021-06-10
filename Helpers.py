@@ -4,17 +4,6 @@ def read_file(input_file):
     return create_cubestring(input_file.read())
 
 
-# Currently, this method removes xyz rotations from the solution sequence.
-# Eventually, the goal is that this method will also convert all remaining
-# Moves into their equivalents when xyz rotations are removed.
-def sequence_scrubber(sequence):
-    result = list()
-    for turn in sequence.split():
-        if not ('y' in turn or 'x' in turn or 'z' in turn):
-            result.append(turn)
-    return " ".join(result)
-
-
 # Creates a cubestring from a readable string
 def create_cubestring(readable_string):
     color_strips = readable_string.split()
@@ -124,7 +113,7 @@ PLL_ALGORITHMS = {
     "rlfblrbb-l--": "R R u Ri U Ri Ui R ui Ri Ri Fi U F",  # Case 18
     "lf-f-b-flrlb": "Ri di F R R u Ri U R Ui R ui Ri Ri",  # Case 19
     "f--r-rl-l--b": "Ri U R Ui Ri Fi Ui F R U Ri F Ri Fi R Ui R",  # Case 20
-    "--f-lrlr-b--": "R U Ri U R U Ri Fi R U Ri Ui Ri F R R Ui Ri U U R Ui Ri"   # Case 21
+    "--f-lrlr-b--": "R U Ri U R U Ri Fi R U Ri Ui Ri F R R Ui Ri U U R Ui Ri"  # Case 21
 }
 
 # 150 randomly generated turn sequences for scrambling cubes
