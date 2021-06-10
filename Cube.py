@@ -324,7 +324,7 @@ class Cube:
             new_cube = deep_copy(scrambled_cube)
             new_cube.move(orienting_sequence)
             new_cube.cfop()
-            self.simplify_sequence()
+            new_cube.simplify_sequence()
             if len(new_cube.solution_sequence.split()) < len(self.solution_sequence.split()):
                 self.__dict__ = new_cube.__dict__
 
