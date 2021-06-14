@@ -734,7 +734,7 @@ class Cube:
             i = 0
             while i < len(turn_list):
                 if i < len(turn_list) - 1 and turn_list[i] == turn_list[i + 1]:
-                    simplified_sequence += turn_list[i] + "2 "
+                    simplified_sequence += turn_list[i][0] + "2 "
                     i += 2
                 else:
                     simplified_sequence += turn_list[i] + ' '

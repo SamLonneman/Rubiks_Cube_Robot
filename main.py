@@ -14,6 +14,7 @@ for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     cube.solve()
     sum_moves += len(cube.solution_sequence.split())
     cubes_tested += 1
+    print(cube.solution_sequence)
 
     # Test if cube is solved
     s = cube.cubestring()
