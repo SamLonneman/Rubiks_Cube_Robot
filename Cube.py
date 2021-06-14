@@ -660,7 +660,7 @@ class Cube:
                     orientations_checked = 0
 
     # Simplify the sequence, removing full cube rotations, triple turns, and trivial undoings
-    def simplify_sequence(self):
+    def simplify_sequence(self, half_turn_metric=True):
         # Remove any full cube rotations and adjust all other moves accordingly
         moves = {
             'y': "U",
@@ -721,6 +721,20 @@ class Cube:
                 if i < len(turn_list) - 1 and (
                         turn_list[i] == turn_list[i + 1] + 'i' or turn_list[i] + 'i' == turn_list[i + 1]):
                     edit_made = True
+                    i += 2
+                else:
+                    simplified_sequence += turn_list[i] + ' '
+                    i += 1
+            self.solution_sequence = simplified_sequence[:-1]
+
+        # Combine duplicates into double turns if half_turn_metric is true
+        if half_turn_metric:
+            simplified_sequence = ""
+            turn_list = self.solution_sequence.split()
+            i = 0
+            while i < len(turn_list):
+                if i < len(turn_list) - 1 and turn_list[i] == turn_list[i + 1]:
+                    simplified_sequence += turn_list[i] + "2 "
                     i += 2
                 else:
                     simplified_sequence += turn_list[i] + ' '
