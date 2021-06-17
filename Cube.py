@@ -27,7 +27,7 @@ class Cube:
     # Constructs a cube from a cubestring
     def __init__(self, cstr):
 
-        # A cube has three member variables
+        # A cube has two member variables
         self.solution_sequence = str()
         self.pieces = set()
 
