@@ -10,7 +10,7 @@ class Motor:
         GPIO.setup(self.direction_pin, GPIO.OUT)
         GPIO.setup(self.step_pin, GPIO.OUT)
 
-    def turn(self, steps=100, delay=0.0005, clockwise=True, other=None):
+    def turn(self, steps=50, clockwise=True, delay=0.0005, other=None):
 
         # If moving motor alone
         if other is None:
