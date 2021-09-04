@@ -727,6 +727,41 @@ class Cube:
                     i += 1
             self.solution_sequence = simplified_sequence[:-1]
 
+        # Remove any need for U or D turns
+        moves = {
+            (0, 0, 1): 'U',
+            (0, -1, 0): 'L',
+            (1, 0, 0): 'F',
+            (0, 1, 0): 'R',
+            (-1, 0, 0): 'B',
+            (0, 0, -1): 'D'
+        }
+        defaults = {
+            'U': 'y',
+            'D': 'w',
+            'F': 'g',
+            'B': 'b',
+            'R': 'o',
+            'L': 'r',
+        }
+        cube = Cube(SOLVED)
+        simplified_sequence = ""
+        for turn in self.solution_sequence.split():
+            move = moves[cube.find_by_col(defaults[turn[0]], None, None).pos()]
+            if 'U' in move:
+                simplified_sequence += "xi F"
+                cube.move("xi")
+            elif 'D' in move:
+                simplified_sequence += "x F"
+                cube.move("x")
+            else:
+                simplified_sequence += move
+            if 'i' in turn:
+                simplified_sequence += 'i'
+            simplified_sequence += ' '
+        simplified_sequence = simplified_sequence[:-1]
+        self.solution_sequence = simplified_sequence
+
         # Combine duplicates into double turns if half_turn_metric is true
         if half_turn_metric:
             simplified_sequence = ""
