@@ -5,6 +5,7 @@ from time import time as current_time
 # SEQUENCE VALIDITY CHECKER
 start_time = current_time()
 sum_moves = 0
+sum_rotations = 0
 cubes_tested = 0
 for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     cube = Cube(SOLVED)
@@ -12,6 +13,7 @@ for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     cube.solve()
     cubes_tested += 1
     sum_moves += len(cube.solution_sequence.split())
+    sum_rotations += cube.solution_sequence.count('x')
 
     # Check if solution sequence is valid (Remove if testing half turn metric)
     cube2 = Cube(SOLVED)
@@ -25,4 +27,5 @@ for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
 
 # Print results
 print(cubes_tested, "tests completed in", round(current_time() - start_time, 3),
-      "seconds with an average of", round(sum_moves / cubes_tested, 2), "moves")
+      "seconds with an average of", round(sum_moves / cubes_tested, 2), "moves, of which",
+      round(sum_rotations / cubes_tested, 2), "were rotations.")
