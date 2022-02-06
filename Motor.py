@@ -10,7 +10,7 @@ class Motor:
         GPIO.setup(self.direction_pin, GPIO.OUT)
         GPIO.setup(self.step_pin, GPIO.OUT)
 
-    def turn(self, steps=50, clockwise=True, delay=0.0005, other=None):
+    def turn(self, clockwise=True, other=None, other_clockwise=True, steps=50, delay=0.0005):
 
         # If moving motor alone
         if other is None:
@@ -30,7 +30,7 @@ class Motor:
 
             # Activate direction pin
             GPIO.output(self.direction_pin, clockwise)
-            GPIO.output(other.direction_pin, not clockwise)
+            GPIO.output(other.direction_pin, other_clockwise)
 
             # Step motor accordingly
             for _ in range(steps):
