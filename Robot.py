@@ -1,31 +1,108 @@
-from Cube import Cube
-from Helpers import SOLVED, SAMPLE_SCRAMBLES
-from time import time as current_time
+from Motor import Motor
 
-# SEQUENCE VALIDITY CHECKER
-start_time = current_time()
-sum_moves = 0
-sum_rotations = 0
-cubes_tested = 0
-for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
-    cube = Cube(SOLVED)
-    cube.move(scramble, False)
-    cube.solve()
-    cubes_tested += 1
-    sum_moves += len(cube.solution_sequence.split())
-    sum_rotations += cube.solution_sequence.count('x')
 
-    # Check if solution sequence is valid (Remove if testing half turn metric)
-    cube2 = Cube(SOLVED)
-    cube2.move(scramble, False)
-    cube2.move(cube.solution_sequence)
-    s = cube2.cubestring()
-    if s[0:9] == 9*s[0] and s[9:18] == 9*s[9] and s[18:27] == 9*s[18] and s[27:36] == 9*s[27] and s[36:45] == 9*s[36] and s[45:54] == 9*s[45]:
-        pass  # print("Cube #", cubes_tested, "solved.")
-    else:
-        print("Cube #", cubes_tested, "FAILED.")
+class Robot:
 
-# Print results
-print(cubes_tested, "tests completed in", round(current_time() - start_time, 3),
-      "seconds with an average of", round(sum_moves / cubes_tested, 2), "moves, of which",
-      round(sum_rotations / cubes_tested, 2), "were rotations.")
+    def __init__(self):
+        self.motorR1 = Motor(15, 18)
+        self.motorR2 = Motor(23, 24)
+        self.motorL1 = Motor(25, 8)
+        self.motorL2 = Motor(7, 1)
+        self.motorF1 = Motor(3, 4)
+        self.motorF2 = Motor(17, 27)
+        self.motorB1 = Motor(10, 9)
+        self.motorB2 = Motor(0, 5)
+
+    def grab(self):
+        self.motorR2.turn(False)
+        self.motorF2.turn(False)
+        self.motorL2.turn(False)
+        self.motorB2.turn(False)
+
+    def drop(self):
+        self.motorR2.turn()
+        self.motorF2.turn()
+        self.motorL2.turn()
+        self.motorB2.turn()
+
+    def R(self):
+        self.motorR1.turn()
+        self.motorR2.turn()
+        self.motorR1.turn(False)
+        self.motorR2.turn(False)
+
+    def Ri(self):
+        self.motorR1.turn(False)
+        self.motorR2.turn()
+        self.motorR1.turn()
+        self.motorR2.turn(False)
+
+    def R2(self):
+        self.motorR1.turn(True, None, True, 100)
+
+    def L(self):
+        self.motorL1.turn()
+        self.motorL2.turn()
+        self.motorL1.turn(False)
+        self.motorL2.turn(False)
+
+    def Li(self):
+        self.motorL1.turn(False)
+        self.motorL2.turn()
+        self.motorL1.turn()
+        self.motorL2.turn(False)
+
+    def L2(self):
+        self.motorL1.turn(True, None, True, 100)
+
+    def F(self):
+        self.motorF1.turn()
+        self.motorF2.turn()
+        self.motorF1.turn(False)
+        self.motorF2.turn(False)
+
+    def Fi(self):
+        self.motorF1.turn(False)
+        self.motorF2.turn()
+        self.motorF1.turn()
+        self.motorF2.turn(False)
+
+    def F2(self):
+        self.motorF1.turn(True, None, True, 100)
+
+    def B(self):
+        self.motorB1.turn()
+        self.motorB2.turn()
+        self.motorB1.turn(False)
+        self.motorB2.turn(False)
+
+    def Bi(self):
+        self.motorB1.turn(False)
+        self.motorB2.turn()
+        self.motorB1.turn()
+        self.motorB2.turn(False)
+
+    def B2(self):
+        self.motorB1.turn(True, None, True, 100)
+
+    def x(self):
+        self.motorR2.turn()
+        self.motorR1.turn(False)
+        self.motorR2.turn(False)
+        self.motorF2.turn(True, self.motorB2, True)
+        self.motorR1.turn(True, self.motorL1, False)
+        self.motorL2.turn()
+        self.motorL1.turn()
+        self.motorL2.turn(False)
+        self.motorF2.turn(False, self.motorB2, False)
+
+    def xi(self):
+        self.motorR2.turn()
+        self.motorR1.turn(False)
+        self.motorR2.turn(False)
+        self.motorF2.turn(True, self.motorB2, True)
+        self.motorR1.turn(False, self.motorL1, True)
+        self.motorL2.turn()
+        self.motorL1.turn()
+        self.motorL2.turn(False)
+        self.motorF2.turn(False, self.motorB2, False)
