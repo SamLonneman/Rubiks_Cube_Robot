@@ -10,29 +10,23 @@ class Motor:
         GPIO.setup(self.direction_pin, GPIO.OUT)
         GPIO.setup(self.step_pin, GPIO.OUT)
 
-    def turn(self, clockwise=True, other=None, other_clockwise=True, steps=50, delay=0.0005):
-
+    def turn(self, clockwise, other, other_cw, steps, delay):
         # If moving motor alone
         if other is None:
-
             # Activate direction pin
             GPIO.output(self.direction_pin, clockwise)
-
             # Step motor accordingly
             for _ in range(steps):
                 GPIO.output(self.step_pin, True)
                 sleep(delay)
                 GPIO.output(self.step_pin, False)
                 sleep(delay)
-
         # If moving two motors simultaneously
         else:
-
-            # Activate direction pin
+            # Activate direction pins
             GPIO.output(self.direction_pin, clockwise)
-            GPIO.output(other.direction_pin, other_clockwise)
-
-            # Step motor accordingly
+            GPIO.output(other.direction_pin, other_cw)
+            # Step motors accordingly
             for _ in range(steps):
                 GPIO.output(self.step_pin, True)
                 GPIO.output(other.step_pin, True)
@@ -40,3 +34,15 @@ class Motor:
                 GPIO.output(self.step_pin, False)
                 GPIO.output(other.step_pin, False)
                 sleep(delay)
+
+    def cw(self, other=None):
+        self.turn(True, other, False, 50, 0.001)
+
+    def ccw(self, other=None):
+        self.turn(False, other, True, 50, 0.001)
+
+    def extend(self, other=None):
+        self.turn(True, other, True, 400, 0.0005)
+
+    def retract(self, other=None):
+        self.turn(False, other, False, 400, 0.0005)
