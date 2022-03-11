@@ -7,14 +7,14 @@ class Robot:
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        self.motorR1 = Motor(15, 18)
-        self.motorR2 = Motor(23, 24)
-        self.motorL1 = Motor(25, 8)
-        self.motorL2 = Motor(7, 1)
-        self.motorF1 = Motor(3, 4)
-        self.motorF2 = Motor(17, 27)
-        self.motorB1 = Motor(10, 9)
-        self.motorB2 = Motor(0, 5)
+        self.motorR1 = Motor(18, 15)
+        self.motorR2 = Motor(8, 25)
+        self.motorL1 = Motor(24, 23)
+        self.motorL2 = Motor(1, 7)
+        self.motorF1 = Motor(27, 17)
+        self.motorF2 = Motor(11, 9)
+        self.motorB1 = Motor(10, 22)
+        self.motorB2 = Motor(5, 0)
 
     def grab(self):
         self.motorR2.extend()
