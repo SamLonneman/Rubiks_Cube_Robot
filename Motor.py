@@ -14,7 +14,7 @@ class Motor:
         # If moving motor alone
         if other is None:
             # Activate direction pin
-            GPIO.output(self.direction_pin, clockwise)
+            GPIO.output(self.direction_pin, not clockwise)
             # Step motor accordingly
             for _ in range(steps):
                 GPIO.output(self.step_pin, True)
@@ -24,8 +24,8 @@ class Motor:
         # If moving two motors simultaneously
         else:
             # Activate direction pins
-            GPIO.output(self.direction_pin, clockwise)
-            GPIO.output(other.direction_pin, other_cw)
+            GPIO.output(self.direction_pin, not clockwise)
+            GPIO.output(other.direction_pin, not other_cw)
             # Step motors accordingly
             for _ in range(steps):
                 GPIO.output(self.step_pin, True)
@@ -42,7 +42,7 @@ class Motor:
         self.turn(False, other, True, 50, 0.001)
 
     def extend(self, other=None):
-        self.turn(True, other, True, 400, 0.0005)
+        self.turn(True, other, True, 450, 0.0003)
 
     def retract(self, other=None):
-        self.turn(False, other, False, 400, 0.0005)
+        self.turn(False, other, False, 450, 0.0003)
