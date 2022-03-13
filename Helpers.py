@@ -26,6 +26,53 @@ def create_cubestring(readable_string):
 # Cubestring of a solved cube
 SOLVED = "yyyyyyyyyrrrrrrrrrgggggggggooooooooobbbbbbbbbwwwwwwwww"
 
+# Dictionary containing all F2L cases and their algorithms
+F2L_ALGORITHMS = {
+    # "<F2L Configuration>": "<Corresponding Algorithm>"
+    "dym1": "",  # Case 00: F2L skip
+    "dym0": "R Ui Ri U yi Ri U U R Ui Ui Ri U R",  # Case 01
+    "dyf0": "U R Ui Ri Ui yi Ri U R",  # Case 02
+    "dyr1": "Ri Fi R U R Ui Ri F yi",  # Case 03
+    "dzm1": "R U Ri Ui R U U Ri Ui R U Ri yi",  # Case 04
+    "dzm0": "R F U R Ui Ri Fi Ui Ri yi",  # Case 05
+    "dzf0": "yi Ri Ui R U Ri Ui R",  # Case 06
+    "dzr1": "R Ui Ri U R Ui Ri yi",  # Case 07
+    "dxm1": "R Ui Ri U R Ui Ui Ri U R Ui Ri yi",  # Case 08
+    "dxm0": "R U F R U Ri Ui Fi Ri yi",  # Case 09
+    "dxf0": "yi Ri U R Ui Ri U R",  # Case 10
+    "dxr1": "R U Ri Ui R U Ri yi",  # Case 11
+    "uxm1": "R U Ri Ui R U Ri Ui R U Ri yi",  # Case 12
+    "uxm0": "R Ui Ri U yi Ri U R",  # Case 13
+    "uxf0": "yi Ri U U R U Ri Ui R",  # Case 14
+    "uxl0": "yi Ui Ri U U R Ui Ri U R",  # Case 15
+    "uxb0": "yi Ri U R Ui Ui Ri Ui R",  # Case 16
+    "uxr0": "F U R Ui Ri Fi R Ui Ri yi",  # Case 17
+    "uxf1": "U R Ui Ri Ui R Ui Ri U R Ui Ri yi",  # Case 18
+    "uxl1": "R Ui Ri U U R U Ri yi",  # Case 19
+    "uxb1": "U R Ui Ui Ri U R Ui Ri yi",  # Case 20
+    "uxr1": "R Ui Ui Ri Ui R U Ri yi",  # Case 21
+    "uym1": "Ui R Ui Ri U U R Ui Ri yi",  # Case 22
+    "uym0": "Ui R U Ri yi U Ri Ui R",  # Case 23
+    "uyf0": "yi U Ri U R Ui Ri Ui R",  # Case 24
+    "uyl0": "yi Ri Ui R",  # Case 25
+    "uyb0": "yi U Ri Ui R Ui Ri Ui R",  # Case 26
+    "uyr0": "yi R Ui Ui Ri Ri Ui R R Ui Ri",  # Case 27
+    "uyf1": "xi R U x L Ui Li xi Ui Ri x",  # Case 28
+    "uyl1": "Ui R Ui Ui Ri U U R Ui Ri yi",  # Case 29
+    "uyb1": "Ui R U Ri Ui R Ui Ui Ri yi",  # Case 30
+    "uyr1": "U R Ui Ri yi",  # Case 31
+    "uzm1": "Ui R Ui Ui Ri U R U Ri yi",  # Case 32
+    "uzm0": "yi U Ri Ui R y Ui R U Ri",  # Case 33
+    "uzf0": "yi Ui Ri U R",  # Case 34
+    "uzl0": "yi U Ri Ui R Ui Ui Ri U R",  # Case 35
+    "uzb0": "yi U Ri U U R Ui Ui Ri U R",  # Case 36
+    "uzr0": "R Ui Ri U U yi Ri Ui R",  # Case 37
+    "uzf1": "R Ui Ri U R Ui Ri U U R Ui Ri yi",  # Case 38
+    "uzl1": "Ui R U Ri U R U Ri yi",  # Case 39
+    "uzb1": "R U Ri yi",  # Case 40
+    "uzr1": "Ui R Ui Ri U R U Ri yi",  # Case 41
+}
+
 # Dictionary containing all OLL cases and their algorithms
 OLL_ALGORITHMS = {
     # "<OLL Configuration>": "<Corresponding Algorithm>"

@@ -1,5 +1,5 @@
 from copy import deepcopy as deep_copy
-from Helpers import create_cubestring, OLL_ALGORITHMS, PLL_ALGORITHMS, SOLVED
+from Helpers import create_cubestring, F2L_ALGORITHMS, OLL_ALGORITHMS, PLL_ALGORITHMS, SOLVED
 
 
 class Piece:
@@ -457,145 +457,24 @@ class Cube:
                 elif corner.pos() == (-1, -1, 1):
                     self.move("U U")
 
-            # If corner is in front-right-bottom corner
-            if corner.pos() == (1, 1, -1):
-                # If the corner is white side down
-                if corner.zcol == bottom_color:
-                    # Case 01
-                    if edge.pos() == (1, 1, 0) and edge.ycol == front_color:
-                        self.move("R Ui Ri U yi Ri U U R Ui Ui Ri U R")
-                    # Case 02
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
-                        self.move("U R Ui Ri Ui yi Ri U R")
-                    # Case 03
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
-                        self.move("Ri Fi R U R Ui Ri F yi")
-                # If the corner is white side front
-                elif corner.xcol == bottom_color:
-                    # Case 04
-                    if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
-                        self.move("R U Ri Ui R U U Ri Ui R U Ri yi")
-                    # Case 05
-                    elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
-                        self.move("R F U R Ui Ri Fi Ui Ri yi")
-                    # Case 06
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
-                        self.move("yi Ri Ui R U Ri Ui R")
-                    # Case 07
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
-                        self.move("R Ui Ri U R Ui Ri yi")
-                # If the corner is white side right
-                elif corner.ycol == bottom_color:
-                    # Case 08
-                    if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
-                        self.move("R Ui Ri U R Ui Ui Ri U R Ui Ri yi")
-                    # Case 09
-                    elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
-                        self.move("R U F R U Ri Ui Fi Ri yi")
-                    # Case 10
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
-                        self.move("yi Ri U R Ui Ri U R")
-                    # Case 11
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
-                        self.move("R U Ri Ui R U Ri yi")
-            # If corner is in front-right-top corner
-            elif corner.pos() == (1, 1, 1):
-                # If the corner is white side up
-                if corner.zcol == bottom_color:
-                    # Case 12
-                    if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
-                        self.move("R U Ri Ui R U Ri Ui R U Ri yi")
-                    # Case 13
-                    elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
-                        self.move("R Ui Ri U yi Ri U R")
-                    # Case 14
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
-                        self.move("yi Ri U U R U Ri Ui R")
-                    # Case 15
-                    elif edge.pos() == (0, -1, 1) and edge.ycol == front_color:
-                        self.move("yi Ui Ri U U R Ui Ri U R")
-                    # Case 16
-                    elif edge.pos() == (-1, 0, 1) and edge.xcol == front_color:
-                        self.move("yi Ri U R Ui Ui Ri Ui R")
-                    # Case 17
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == front_color:
-                        self.move("F U R Ui Ri Fi R Ui Ri yi")
-                    # Case 18
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == right_color:
-                        self.move("U R Ui Ri Ui R Ui Ri U R Ui Ri yi")
-                    # Case 19
-                    elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
-                        self.move("R Ui Ri U U R U Ri yi")
-                    # Case 20
-                    elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
-                        self.move("U R Ui Ui Ri U R Ui Ri yi")
-                    # Case 21
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
-                        self.move("R Ui Ui Ri Ui R U Ri yi")
-                # If corner is white side front
-                elif corner.xcol == bottom_color:
-                    # Case 22
-                    if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
-                        self.move("Ui R Ui Ri U U R Ui Ri yi")
-                    # Case 23
-                    elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
-                        self.move("Ui R U Ri yi U Ri Ui R")
-                    # Case 24
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
-                        self.move("yi U Ri U R Ui Ri Ui R")
-                    # Case 25
-                    elif edge.pos() == (0, -1, 1) and edge.ycol == front_color:
-                        self.move("yi Ri Ui R")
-                    # Case 26
-                    elif edge.pos() == (-1, 0, 1) and edge.xcol == front_color:
-                        self.move("yi U Ri Ui R Ui Ri Ui R")
-                    # Case 27
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == front_color:
-                        self.move("yi R Ui Ui Ri Ri Ui R R Ui Ri")
-                    # Case 28 FUNKY CASE MAYBE FIX LATER
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == right_color:
-                        self.move("xi R U x L Ui Li xi Ui Ri x")
-                    # Case 29
-                    elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
-                        self.move("Ui R Ui Ui Ri U U R Ui Ri yi")
-                    # Case 30
-                    elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
-                        self.move("Ui R U Ri Ui R Ui Ui Ri yi")
-                    # Case 31
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
-                        self.move("U R Ui Ri yi")
-                # If corner is white side right
-                elif corner.ycol == bottom_color:
-                    # Case 32
-                    if edge.pos() == (1, 1, 0) and edge.xcol == front_color:
-                        self.move("Ui R Ui Ui Ri U R U Ri yi")
-                    # Case 33
-                    elif edge.pos() == (1, 1, 0) and edge.ycol == front_color:
-                        self.move("yi U Ri Ui R y Ui R U Ri")  # y Ui ==  yidi
-                    # Case 34
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == front_color:
-                        self.move("yi Ui Ri U R")
-                    # Case 35
-                    elif edge.pos() == (0, -1, 1) and edge.ycol == front_color:
-                        self.move("yi U Ri Ui R Ui Ui Ri U R")
-                    # Case 36
-                    elif edge.pos() == (-1, 0, 1) and edge.xcol == front_color:
-                        self.move("yi U Ri U U R Ui Ui Ri U R")
-                    # Case 37
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == front_color:
-                        self.move("R Ui Ri U U yi Ri Ui R")
-                    # Case 38
-                    elif edge.pos() == (1, 0, 1) and edge.xcol == right_color:
-                        self.move("R Ui Ri U R Ui Ri U U R Ui Ri yi")
-                    # Case 39
-                    elif edge.pos() == (0, -1, 1) and edge.ycol == right_color:
-                        self.move("Ui R U Ri U R U Ri yi")
-                    # Case 40
-                    elif edge.pos() == (-1, 0, 1) and edge.xcol == right_color:
-                        self.move("R U Ri yi")
-                    # Case 41
-                    elif edge.pos() == (0, 1, 1) and edge.ycol == right_color:
-                        self.move("Ui R Ui Ri U R U Ri yi")
+            # Get the current F2L configuration
+            configuration = str()
+            configuration += 'u' if corner.zpos == 1 else 'd'
+            configuration += 'y' if right_color == corner.ycol else 'x' if right_color == corner.xcol else 'z'
+            if edge.zpos == 0:
+                configuration += 'm'
+            elif edge.xpos == 1:
+                configuration += 'f'
+            elif edge.ypos == -1:
+                configuration += 'l'
+            elif edge.xpos == -1:
+                configuration += 'b'
+            else:
+                configuration += 'r'
+            configuration += '0' if edge.zcol == right_color or edge.zpos == 0 and edge.xcol == right_color else '1'
+
+            # Perform F2L algorithm for this configuration
+            self.move(F2L_ALGORITHMS[configuration])
 
             # Now that a pair has been placed, add the pair to the solved set
             solved_pairs.add((corner, edge))
@@ -660,7 +539,7 @@ class Cube:
                     orientations_checked = 0
 
     # Simplify the sequence, removing full cube rotations, triple turns, and trivial undoings
-    def simplify_sequence(self, half_turn_metric=False):
+    def simplify_sequence(self, half_turn_metric=True):
         # Remove any full cube rotations and adjust all other moves accordingly
         defaults = {
             'y': "U",
