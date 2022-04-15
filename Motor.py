@@ -42,7 +42,7 @@ class Motor:
         self.turn(False, other, True, 50, 0.001)
 
     def extend(self, other=None):
-        self.turn(True, other, True, 450, 0.0003)
+        self.turn(False, other, False, 450, 0.0003)
 
     def retract(self, other=None):
-        self.turn(False, other, False, 450, 0.0003)
+        self.turn(True, other, True, 450, 0.0003)
