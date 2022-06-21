@@ -127,3 +127,26 @@ class Robot:
         self.motorL2.retract()
         self.motorL1.cw()
         self.motorL2.extend()
+
+    def z(self):
+        self.motorF2.retract()
+        self.motorF1.ccw()
+        self.motorF2.extend()
+        self.motorL2.retract(self.motorR2)
+        self.motorF1.cw(self.motorB1)
+        self.motorL2.extend(self.motorR2)
+        self.motorB2.retract()
+        self.motorB1.cw()
+        self.motorB2.extend()
+
+    def z2(self):
+        self.motorF2.retract()
+        self.motorF1.ccw()
+        self.motorF2.extend()
+        self.motorL2.retract(self.motorR2)
+        self.motorF1.cw(self.motorB1)
+        self.motorF1.cw(self.motorB1)
+        self.motorL2.extend(self.motorR2)
+        self.motorF2.retract()
+        self.motorF1.cw()
+        self.motorF2.extend()
