@@ -1,3 +1,4 @@
+from copy import deepcopy
 from io import BytesIO
 from os import system
 
@@ -43,13 +44,13 @@ class Robot:
         self.white = (156, 151, 109)
         self.PIXELS = [
             (951, 720),
-            (887, 571),
+            (871,339),
             (755, 495),
-            (1042, 586),
+            (848, 603),
             (967, 511),
-            (902, 433),
+            (1088,415),
             (1177, 519),
-            (1053, 444),
+            (1078,619),
             (979, 303),
         ]
 
@@ -59,10 +60,32 @@ class Robot:
             difference += abs(rgb1[i] - rgb2[i])
         return difference
 
+    def rotate_list(self, arr, num_rotations=1):
+        result = deepcopy(arr)
+        for _ in range(num_rotations):
+            result[0] = arr[6]
+            result[1] = arr[3]
+            result[2] = arr[0]
+            result[3] = arr[7]
+            result[5] = arr[1]
+            result[6] = arr[8]
+            result[7] = arr[5]
+            result[8] = arr[2]
+            arr = deepcopy(result)
+        return result
+
+    def list_to_string(self, arr):
+        result = str()
+        for item in arr:
+            result += item
+        return result
+
     def take_picture(self):
         stream = BytesIO()
         self.camera.capture(stream, format='jpeg')
-        return Image.open(stream).load()
+        image = Image.open(stream).load()
+        stream.close()
+        return image
 
     def calibrate(self):
         self.yellow = self.take_picture()[self.PIXELS[4]]
@@ -90,27 +113,36 @@ class Robot:
         }
         return differences[min(differences.keys())]
 
-    def get_cubestring_segment(self, order):
-        cubestring = str()
+    def get_face_cubestring(self, num_rotations):
+        face_list = list()
+        self.motorL2.retract(self.motorR2)
         image = self.take_picture()
-        for i in order:
-            cubestring += self.pick_color(image[self.PIXELS[i]])
-        return cubestring
+        self.motorL2.extend(self.motorR2)
+        for i in [0, 2, 3, 4, 5, 6, 8]:
+            face_list += self.pick_color(image[self.PIXELS[i]])
+        self.motorF2.retract(self.motorB2)
+        image = self.take_picture()
+        self.motorF2.extend(self.motorB2)
+        for i in [1, 7]:
+            face_list += self.pick_color(image[self.PIXELS[i]])
+        face_list = self.rotate_list(face_list, num_rotations)
+        face_cubestring = self.list_to_string(face_list)
+        return face_cubestring
 
     def read_cube(self):
         cubestring = str()
-        cubestring += self.get_cubestring_segment((0, 1, 2, 3, 4, 5, 6, 7, 8))
+        cubestring += self.get_face_cubestring(0)
         self.z()
-        cubestring += self.get_cubestring_segment((2, 5, 8, 1, 4, 7, 0, 3, 6))
+        cubestring += self.get_face_cubestring(3)
         self.x()
-        cubestring += self.get_cubestring_segment((2, 5, 8, 1, 4, 7, 0, 3, 6))
+        cubestring += self.get_face_cubestring(3)
         self.x()
-        cubestring += self.get_cubestring_segment((2, 5, 8, 1, 4, 7, 0, 3, 6))
+        cubestring += self.get_face_cubestring(3)
         self.x()
-        cubestring += self.get_cubestring_segment((2, 5, 8, 1, 4, 7, 0, 3, 6))
+        cubestring += self.get_face_cubestring(3)
         self.x()
         self.z()
-        cubestring += self.get_cubestring_segment((6, 3, 0, 7, 4, 1, 8, 5, 2))
+        cubestring += self.get_face_cubestring(2)
         self.z2()
         return cubestring
 
