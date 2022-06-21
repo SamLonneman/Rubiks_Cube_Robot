@@ -1,4 +1,4 @@
-from Helpers import SOLVED
+from constants import SOLVED
 from Robot import Robot
 from Cube import Cube
 from time import sleep

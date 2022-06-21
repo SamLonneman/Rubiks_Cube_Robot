@@ -1,5 +1,5 @@
 from Cube import Cube
-from Helpers import SOLVED, SAMPLE_SCRAMBLES
+from constants import SOLVED, SAMPLE_SCRAMBLES
 from time import time as current_time
 
 # SEQUENCE VALIDITY CHECKER
