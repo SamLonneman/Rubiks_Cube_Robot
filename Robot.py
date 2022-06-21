@@ -30,12 +30,6 @@ class Robot:
         self.motorB1 = Motor(10, 22)
         self.motorB2 = Motor(5, 0)
 
-    def grab(self):
-        self.motorR2.extend()
-        self.motorF2.extend()
-        self.motorL2.extend()
-        self.motorB2.extend()
-
     def drop(self):
         self.motorR2.retract()
         self.motorF2.retract()
