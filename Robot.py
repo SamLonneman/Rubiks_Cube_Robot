@@ -31,10 +31,8 @@ class Robot:
         self.motorB2 = Motor(5, 0)
 
     def drop(self):
-        self.motorR2.retract()
-        self.motorF2.retract()
-        self.motorL2.retract()
-        self.motorB2.retract()
+        self.motorR2.retract(self.motorL2)
+        self.motorF2.retract(self.motorB2)
 
     def R(self):
         self.motorR1.cw()
