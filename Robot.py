@@ -1,5 +1,6 @@
 from RPi import GPIO
 from Motor import Motor
+from os import system
 
 
 class Robot:
@@ -7,6 +8,19 @@ class Robot:
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
+        self.solve_button = 6
+        self.abort_button = 13
+        self.shutdown_button = 19
+        self.hot_pin = 26
+        GPIO.setup(self.solve_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.abort_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.shutdown_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.hot_pin, GPIO.OUT)
+        GPIO.output(self.hot_pin, True)
+        system("sudo sh -c \"echo none > /sys/class/leds/led1/trigger\"")
+        system("sudo sh -c \"echo 0 > /sys/class/leds/led1/brightness\"")
+        system("sudo sh -c \"echo none > /sys/class/leds/led0/trigger\"")
+        system("sudo sh -c \"echo 1 > /sys/class/leds/led0/brightness\"")
         self.motorR1 = Motor(18, 15)
         self.motorR2 = Motor(8, 25)
         self.motorL1 = Motor(24, 23)
