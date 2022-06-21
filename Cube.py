@@ -1,4 +1,5 @@
 from copy import deepcopy as deep_copy
+
 from constants import create_cubestring, F2L_ALGORITHMS, OLL_ALGORITHMS, PLL_ALGORITHMS, SOLVED
 
 

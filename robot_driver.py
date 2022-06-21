@@ -1,9 +1,11 @@
-from constants import SOLVED
-from Robot import Robot
-from Cube import Cube
-from time import sleep
-from RPi import GPIO
 from os import system
+from time import sleep
+
+from RPi import GPIO
+
+from Cube import Cube
+from Robot import Robot
+from constants import SOLVED
 
 # Initialize Robot
 robot = Robot()

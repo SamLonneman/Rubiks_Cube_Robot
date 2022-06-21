@@ -1,6 +1,7 @@
+from time import time as current_time
+
 from Cube import Cube
 from constants import SOLVED, SAMPLE_SCRAMBLES
-from time import time as current_time
 
 # SEQUENCE VALIDITY CHECKER
 start_time = current_time()
