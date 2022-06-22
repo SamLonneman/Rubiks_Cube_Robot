@@ -114,17 +114,17 @@ class Robot:
         return differences[min(differences.keys())]
 
     def get_face_cubestring(self, num_rotations):
-        face_list = list()
+        face_list = [None] * 9
         self.motorL2.retract(self.motorR2)
         image = self.take_picture()
         self.motorL2.extend(self.motorR2)
         for i in [0, 2, 3, 4, 5, 6, 8]:
-            face_list += self.pick_color(image[self.PIXELS[i]])
+            face_list[i] = self.pick_color(image[self.PIXELS[i]])
         self.motorF2.retract(self.motorB2)
         image = self.take_picture()
         self.motorF2.extend(self.motorB2)
         for i in [1, 7]:
-            face_list += self.pick_color(image[self.PIXELS[i]])
+            face_list[i] = self.pick_color(image[self.PIXELS[i]])
         face_list = self.rotate_list(face_list, num_rotations)
         face_cubestring = self.list_to_string(face_list)
         return face_cubestring
