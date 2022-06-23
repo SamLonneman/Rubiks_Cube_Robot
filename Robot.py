@@ -1,11 +1,13 @@
 from copy import deepcopy
 from io import BytesIO
 from os import system
+from time import sleep
 
 from PIL import Image
 from RPi import GPIO
 from picamera import PiCamera
 
+from Cube import Cube
 from Motor import Motor
 
 
@@ -14,18 +16,18 @@ class Robot:
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        self.solve_button = 6
-        self.abort_button = 13
-        self.shutdown_button = 19
-        self.hot_pin = 26
-        GPIO.setup(self.solve_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.abort_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.shutdown_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.hot_pin, GPIO.OUT)
-        GPIO.output(self.hot_pin, True)
+        self.SOLVE_BUTTON = 6
+        self.ABORT_BUTTON = 13
+        self.SHUTDOWN_BUTTON = 19
+        self.HOT_PIN = 26
+        GPIO.setup(self.SOLVE_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.ABORT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.SHUTDOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.HOT_PIN, GPIO.OUT)
+        GPIO.output(self.HOT_PIN, True)
         system("sudo sh -c \"echo none > /sys/class/leds/led1/trigger\"")
-        system("sudo sh -c \"echo 0 > /sys/class/leds/led1/brightness\"")
         system("sudo sh -c \"echo none > /sys/class/leds/led0/trigger\"")
+        system("sudo sh -c \"echo 0 > /sys/class/leds/led1/brightness\"")
         system("sudo sh -c \"echo 1 > /sys/class/leds/led0/brightness\"")
         self.motorR1 = Motor(18, 15)
         self.motorR2 = Motor(8, 25)
@@ -36,71 +38,94 @@ class Robot:
         self.motorB1 = Motor(10, 22)
         self.motorB2 = Motor(5, 0)
         self.camera = PiCamera()
-        self.yellow = (117, 142, 0)
-        self.red = (132, 17, 14)
-        self.green = (0, 109, 2)
-        self.orange = (178, 70, 8)
-        self.blue = (0, 31, 53)
-        self.white = (156, 151, 109)
-        self.PIXELS = [
-            (951, 720),
-            (871,339),
-            (755, 495),
-            (848, 603),
-            (967, 511),
-            (1088,415),
-            (1177, 519),
-            (1078,619),
-            (979, 303),
+        self.yellow = tuple()
+        self.red = tuple()
+        self.green = tuple()
+        self.orange = tuple()
+        self.blue = tuple()
+        self.white = tuple()
+        self.images = list()
+        self.COORDINATES = [
+            (929, 727),
+            (841, 608),
+            (754, 488),
+            (1050, 633),
+            (963, 516),
+            (874, 401),
+            (1167, 543),
+            (1078, 428),
+            (988, 309),
         ]
+        self.c = 0
 
-    def rgb_diff(self, rgb1, rgb2):
-        difference = 0
-        for i in range(3):
-            difference += abs(rgb1[i] - rgb2[i])
-        return difference
+    def construct_simulation_cube(self):
+        self.capture()
+        self.calibrate()
+        cube = Cube(self.construct_cubestring())
+        cube.move("z x x x z", False)
+        return cube
 
-    def rotate_list(self, arr, num_rotations=1):
-        result = deepcopy(arr)
-        for _ in range(num_rotations):
-            result[0] = arr[6]
-            result[1] = arr[3]
-            result[2] = arr[0]
-            result[3] = arr[7]
-            result[5] = arr[1]
-            result[6] = arr[8]
-            result[7] = arr[5]
-            result[8] = arr[2]
-            arr = deepcopy(result)
-        return result
+    def capture(self):
+        self.capture_side(0)
+        self.z()
+        self.capture_side(3)
+        self.x()
+        self.capture_side(3)
+        self.x()
+        self.capture_side(3)
+        self.x()
+        self.capture_side(3)
+        self.z()
+        self.capture_side(1)
 
-    def list_to_string(self, arr):
-        result = str()
-        for item in arr:
-            result += item
-        return result
+    def capture_side(self, num_rotations):
+        self.motorL2.retract(self.motorR2)
+        image1 = self.take_picture()
+        self.motorL2.extend(self.motorR2)
+        self.motorF2.retract(self.motorB2)
+        image2 = self.take_picture()
+        self.motorF2.extend(self.motorB2)
+        image1[1], image1[7] = image2[1], image2[7]
+        self.images.append(self.rotate_list(image1, num_rotations))
 
     def take_picture(self):
         stream = BytesIO()
+        sleep(1)
         self.camera.capture(stream, format='jpeg')
+        # self.c += 1
+        # self.camera.capture('image' + str(self.c) + '.jpg')
         image = Image.open(stream).load()
         stream.close()
-        return image
+        return [image[coordinate] for coordinate in self.COORDINATES]
+
+    def rotate_list(self, image, num_rotations):
+        result = deepcopy(image)
+        for _ in range(num_rotations):
+            result[0] = image[6]
+            result[1] = image[3]
+            result[2] = image[0]
+            result[3] = image[7]
+            result[5] = image[1]
+            result[6] = image[8]
+            result[7] = image[5]
+            result[8] = image[2]
+            image = deepcopy(result)
+        return result
 
     def calibrate(self):
-        self.yellow = self.take_picture()[self.PIXELS[4]]
-        self.z()
-        self.red = self.take_picture()[self.PIXELS[4]]
-        self.x()
-        self.green = self.take_picture()[self.PIXELS[4]]
-        self.x()
-        self.orange = self.take_picture()[self.PIXELS[4]]
-        self.x()
-        self.blue = self.take_picture()[self.PIXELS[4]]
-        self.x()
-        self.z()
-        self.white = self.take_picture()[self.PIXELS[4]]
-        self.z2()
+        self.yellow = self.images[0][4]
+        self.red = self.images[1][4]
+        self.green = self.images[2][4]
+        self.orange = self.images[3][4]
+        self.blue = self.images[4][4]
+        self.white = self.images[5][4]
+
+    def construct_cubestring(self):
+        cubestring = str()
+        for image in self.images:
+            for pixel in image:
+                cubestring += self.pick_color(pixel)
+        return cubestring
 
     def pick_color(self, rgb):
         differences = {
@@ -113,38 +138,11 @@ class Robot:
         }
         return differences[min(differences.keys())]
 
-    def get_face_cubestring(self, num_rotations):
-        face_list = [None] * 9
-        self.motorL2.retract(self.motorR2)
-        image = self.take_picture()
-        self.motorL2.extend(self.motorR2)
-        for i in [0, 2, 3, 4, 5, 6, 8]:
-            face_list[i] = self.pick_color(image[self.PIXELS[i]])
-        self.motorF2.retract(self.motorB2)
-        image = self.take_picture()
-        self.motorF2.extend(self.motorB2)
-        for i in [1, 7]:
-            face_list[i] = self.pick_color(image[self.PIXELS[i]])
-        face_list = self.rotate_list(face_list, num_rotations)
-        face_cubestring = self.list_to_string(face_list)
-        return face_cubestring
-
-    def read_cube(self):
-        cubestring = str()
-        cubestring += self.get_face_cubestring(0)
-        self.z()
-        cubestring += self.get_face_cubestring(3)
-        self.x()
-        cubestring += self.get_face_cubestring(3)
-        self.x()
-        cubestring += self.get_face_cubestring(3)
-        self.x()
-        cubestring += self.get_face_cubestring(3)
-        self.x()
-        self.z()
-        cubestring += self.get_face_cubestring(2)
-        self.z2()
-        return cubestring
+    def rgb_diff(self, rgb1, rgb2):
+        difference = 0
+        for i in range(3):
+            difference += abs(rgb1[i] - rgb2[i])
+        return difference
 
     def drop(self):
         self.motorR2.retract(self.motorL2)
