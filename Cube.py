@@ -108,7 +108,7 @@ class Cube:
         return result
 
     # Returns the cubestring of the cube's current state
-    def cubestring(self):
+    def generate_cubestring(self):
         return create_cubestring(str(self))
 
     # Regular turns

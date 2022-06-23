@@ -20,7 +20,7 @@ for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     cube2 = Cube(SOLVED)
     cube2.move(scramble, False)
     cube2.move(cube.solution_sequence)
-    s = cube2.cubestring()
+    s = cube2.generate_cubestring()
     if s[0:9] == 9*s[0] and s[9:18] == 9*s[9] and s[18:27] == 9*s[18] and s[27:36] == 9*s[27] and s[36:45] == 9*s[36] and s[45:54] == 9*s[45]:
         pass  # print("Cube #", cubes_tested, "solved.")
     else:
