@@ -487,7 +487,7 @@ class Cube:
         while True:
             # Determine current OLL configuration
             configuration = str()
-            cubestring = self.cubestring()
+            cubestring = self.generate_cubestring()
             top_color = self.find_by_pos(0, 0, 1).zcol
             for i in 38, 37, 36, 9, 0, 1, 2, 29, 10, 3, 4, 5, 28, 11, 6, 7, 8, 27, 18, 19, 20:
                 configuration += '1' if cubestring[i] == top_color else '0'
@@ -509,7 +509,7 @@ class Cube:
 
             # Determine current PLL configuration
             configuration = str()
-            cubestring = self.cubestring()
+            cubestring = self.generate_cubestring()
             back_color = self.find_by_pos(-1, 0, 0).xcol
             front_color = self.find_by_pos(1, 0, 0).xcol
             left_color = self.find_by_pos(0, -1, 0).ycol
