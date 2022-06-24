@@ -58,6 +58,16 @@ class Robot:
         ]
         self.c = 0
 
+    def proceed(self):
+        sleep(2)
+        while not GPIO.input(self.SOLVE_BUTTON) and not GPIO.input(self.ABORT_BUTTON):
+            sleep(0.1)
+        if GPIO.input(self.ABORT_BUTTON):
+            GPIO.cleanup()
+            system("sudo shutdown -h now")
+            return False
+        return True
+
     def construct_simulation_cube(self):
         self.capture()
         self.calibrate()
@@ -262,15 +272,6 @@ class Robot:
     def drop(self):
         self.motorR2.retract(self.motorL2)
         self.motorF2.retract(self.motorB2)
-
-    def solve_button_is_depressed(self):
-        return GPIO.input(self.SOLVE_BUTTON)
-
-    def abort_button_is_depressed(self):
-        return GPIO.input(self.ABORT_BUTTON)
-
-    def shutdown_button_is_depressed(self):
-        return GPIO.input(self.SHUTDOWN_BUTTON)
 
     def cleanup(self):
         GPIO.cleanup()
