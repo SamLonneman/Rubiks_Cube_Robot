@@ -328,6 +328,7 @@ class Cube:
             new_cube.simplify_sequence()
             if len(new_cube.solution_sequence.split()) < len(self.solution_sequence.split()):
                 self.__dict__ = new_cube.__dict__
+        return self.solution_sequence
 
     # Solve a cross on the bottom
     def cross(self):

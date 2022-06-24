@@ -1,35 +1,32 @@
 from os import system
 from time import sleep
 
-from RPi import GPIO
-
 from Cube import Cube
 from Robot import Robot
-from constants import SOLVED
 
 # Initialize Robot
 robot = Robot()
 
-while not GPIO.input(robot.shutdown_button):
+# Repeat until shutdown button is pressed
+while not robot.shutdown_button_is_depressed():
 
     # Wait for input
-    while not (GPIO.input(robot.shutdown_button) or GPIO.input(robot.solve_button)):
+    while not (robot.shutdown_button_is_depressed() or robot.solve_button_is_depressed()):
         sleep(0.1)
 
     # If solve button was pressed, solve
-    if not GPIO.input(robot.shutdown_button):
+    if not robot.shutdown_button_is_depressed():
 
-        # Read in cube state (For now a superflip)
-        cube = Cube(SOLVED)
-        cube.move("M M Ui R R Di S M M U Mi U U F F Di S M M Ui R R Ui", False)
+        # Construct a simulation cube and solve it
+        cube = robot.construct_simulation_cube()
+        solution_sequence = cube.solve()
 
-        # Solve cube, abort at any time if necessary
-        cube.solve()
-        for turn in cube.solution_sequence.split():
-            if GPIO.input(robot.abort_button):
-                break
+        # Solve physical cube, abort at any time if necessary
+        for turn in solution_sequence.split():
             getattr(robot, turn)()
+            if robot.abort_button_is_depressed():
+                break
 
 # Shut down
-GPIO.cleanup()
+robot.cleanup()
 system("sudo shutdown -h now")
