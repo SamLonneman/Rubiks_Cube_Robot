@@ -65,6 +65,8 @@ class Robot:
             sleep(2)
             if GPIO.input(self.ABORT_BUTTON):
                 GPIO.cleanup()
+                system("sudo sh -c \"echo 1 > /sys/class/leds/led1/brightness\"")
+                system("sudo sh -c \"echo 0 > /sys/class/leds/led0/brightness\"")
                 system("sudo shutdown -h now")
                 return False
             return self.proceed()
