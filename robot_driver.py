@@ -1,4 +1,3 @@
-from Cube import Cube
 from Robot import Robot
 
 # Initialize Robot
