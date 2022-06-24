@@ -10,7 +10,7 @@ while robot.proceed():
     simulation_cube = robot.construct_simulation_cube()
 
     # Generate solution sequence from virtual cube
-    solution_sequence = simulation_cube.solve()
+    solution_sequence = simulation_cube.generate_solution_sequence()
 
     # Use generated solution sequence to solve cube
     robot.solve(solution_sequence)

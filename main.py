@@ -11,7 +11,7 @@ cubes_tested = 0
 for scramble in SAMPLE_SCRAMBLES.split("\n")[:150]:
     cube = Cube(SOLVED)
     cube.move(scramble, False)
-    cube.solve()
+    cube.generate_solution_sequence()
     cubes_tested += 1
     sum_moves += len(cube.solution_sequence.split())
     sum_rotations += cube.solution_sequence.count('x')

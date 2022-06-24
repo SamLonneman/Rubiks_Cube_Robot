@@ -317,7 +317,7 @@ class Cube:
         self.oll()    # 10.25 moves on average
         self.pll()    # 15.29 moves on average
 
-    def solve(self):
+    def generate_solution_sequence(self):
         scrambled_cube = deep_copy(self)
         self.cfop()
         self.simplify_sequence()
