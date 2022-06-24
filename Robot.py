@@ -59,13 +59,15 @@ class Robot:
         self.c = 0
 
     def proceed(self):
-        sleep(2)
         while not GPIO.input(self.SOLVE_BUTTON) and not GPIO.input(self.ABORT_BUTTON):
             sleep(0.1)
         if GPIO.input(self.ABORT_BUTTON):
-            GPIO.cleanup()
-            system("sudo shutdown -h now")
-            return False
+            sleep(2)
+            if GPIO.input(self.ABORT_BUTTON):
+                GPIO.cleanup()
+                system("sudo shutdown -h now")
+                return False
+            return self.proceed()
         return True
 
     def construct_simulation_cube(self):
