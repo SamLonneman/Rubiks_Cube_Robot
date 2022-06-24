@@ -7,7 +7,7 @@ from PIL import Image
 from RPi import GPIO
 from picamera import PiCamera
 
-from Cube import Cube
+from VirtualCube import VirtualCube
 from Motor import Motor
 
 
@@ -75,9 +75,9 @@ class Robot:
     def construct_simulation_cube(self):
         self.capture()
         self.calibrate()
-        cube = Cube(self.construct_cubestring())
-        cube.move("z x x x z", False)
-        return cube
+        virtual_cube = VirtualCube(self.construct_cubestring())
+        virtual_cube.move("z x x x z", False)
+        return virtual_cube
 
     def capture(self):
         self.capture_side(0)
@@ -161,7 +161,7 @@ class Robot:
     def solve(self, solution_sequence):
         for turn in solution_sequence.split().append("drop"):
             getattr(self, turn)()
-            if self.abort_button_is_depressed():
+            if GPIO.input(self.ABORT_BUTTON):
                 break
 
     def R(self):

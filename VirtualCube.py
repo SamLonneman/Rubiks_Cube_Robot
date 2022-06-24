@@ -3,7 +3,7 @@ from copy import deepcopy as deep_copy
 from constants import create_cubestring, F2L_ALGORITHMS, OLL_ALGORITHMS, PLL_ALGORITHMS, SOLVED
 
 
-class Piece:
+class VirtualPiece:
 
     def __init__(self, xpos, ypos, zpos, xcol, ycol, zcol):
         self.xpos = xpos
@@ -23,43 +23,43 @@ class Piece:
         return {self.xcol, self.ycol, self.zcol}
 
 
-class Cube:
+class VirtualCube:
 
-    # Constructs a cube from a cubestring
+    # Constructs a virtual cube from a cubestring
     def __init__(self, cstr):
 
-        # A cube has two member variables
+        # A virtual cube has two member variables
         self.solution_sequence = str()
         self.pieces = set()
 
         # Initialize piece set
-        self.pieces.add(Piece(-1, -1, 1, cstr[38], cstr[9], cstr[0]))
-        self.pieces.add(Piece(-1, 0, 1, cstr[37], None, cstr[1]))
-        self.pieces.add(Piece(-1, 1, 1, cstr[36], cstr[29], cstr[2]))
-        self.pieces.add(Piece(0, -1, 1, None, cstr[10], cstr[3]))
-        self.pieces.add(Piece(0, 0, 1, None, None, cstr[4]))
-        self.pieces.add(Piece(0, 1, 1, None, cstr[28], cstr[5]))
-        self.pieces.add(Piece(1, -1, 1, cstr[18], cstr[11], cstr[6]))
-        self.pieces.add(Piece(1, 0, 1, cstr[19], None, cstr[7]))
-        self.pieces.add(Piece(1, 1, 1, cstr[20], cstr[27], cstr[8]))
-        self.pieces.add(Piece(-1, -1, 0, cstr[41], cstr[12], None))
-        self.pieces.add(Piece(-1, 0, 0, cstr[40], None, None))
-        self.pieces.add(Piece(-1, 1, 0, cstr[39], cstr[32], None))
-        self.pieces.add(Piece(0, -1, 0, None, cstr[13], None))
-        self.pieces.add(Piece(0, 0, 0, None, None, None))
-        self.pieces.add(Piece(0, 1, 0, None, cstr[31], None))
-        self.pieces.add(Piece(1, -1, 0, cstr[21], cstr[14], None))
-        self.pieces.add(Piece(1, 0, 0, cstr[22], None, None))
-        self.pieces.add(Piece(1, 1, 0, cstr[23], cstr[30], None))
-        self.pieces.add(Piece(-1, -1, -1, cstr[44], cstr[15], cstr[51]))
-        self.pieces.add(Piece(-1, 0, -1, cstr[43], None, cstr[52]))
-        self.pieces.add(Piece(-1, 1, -1, cstr[42], cstr[35], cstr[53]))
-        self.pieces.add(Piece(0, -1, -1, None, cstr[16], cstr[48]))
-        self.pieces.add(Piece(0, 0, -1, None, None, cstr[49]))
-        self.pieces.add(Piece(0, 1, -1, None, cstr[34], cstr[50]))
-        self.pieces.add(Piece(1, -1, -1, cstr[24], cstr[17], cstr[45]))
-        self.pieces.add(Piece(1, 0, -1, cstr[25], None, cstr[46]))
-        self.pieces.add(Piece(1, 1, -1, cstr[26], cstr[33], cstr[47]))
+        self.pieces.add(VirtualPiece(-1, -1, 1, cstr[38], cstr[9], cstr[0]))
+        self.pieces.add(VirtualPiece(-1, 0, 1, cstr[37], None, cstr[1]))
+        self.pieces.add(VirtualPiece(-1, 1, 1, cstr[36], cstr[29], cstr[2]))
+        self.pieces.add(VirtualPiece(0, -1, 1, None, cstr[10], cstr[3]))
+        self.pieces.add(VirtualPiece(0, 0, 1, None, None, cstr[4]))
+        self.pieces.add(VirtualPiece(0, 1, 1, None, cstr[28], cstr[5]))
+        self.pieces.add(VirtualPiece(1, -1, 1, cstr[18], cstr[11], cstr[6]))
+        self.pieces.add(VirtualPiece(1, 0, 1, cstr[19], None, cstr[7]))
+        self.pieces.add(VirtualPiece(1, 1, 1, cstr[20], cstr[27], cstr[8]))
+        self.pieces.add(VirtualPiece(-1, -1, 0, cstr[41], cstr[12], None))
+        self.pieces.add(VirtualPiece(-1, 0, 0, cstr[40], None, None))
+        self.pieces.add(VirtualPiece(-1, 1, 0, cstr[39], cstr[32], None))
+        self.pieces.add(VirtualPiece(0, -1, 0, None, cstr[13], None))
+        self.pieces.add(VirtualPiece(0, 0, 0, None, None, None))
+        self.pieces.add(VirtualPiece(0, 1, 0, None, cstr[31], None))
+        self.pieces.add(VirtualPiece(1, -1, 0, cstr[21], cstr[14], None))
+        self.pieces.add(VirtualPiece(1, 0, 0, cstr[22], None, None))
+        self.pieces.add(VirtualPiece(1, 1, 0, cstr[23], cstr[30], None))
+        self.pieces.add(VirtualPiece(-1, -1, -1, cstr[44], cstr[15], cstr[51]))
+        self.pieces.add(VirtualPiece(-1, 0, -1, cstr[43], None, cstr[52]))
+        self.pieces.add(VirtualPiece(-1, 1, -1, cstr[42], cstr[35], cstr[53]))
+        self.pieces.add(VirtualPiece(0, -1, -1, None, cstr[16], cstr[48]))
+        self.pieces.add(VirtualPiece(0, 0, -1, None, None, cstr[49]))
+        self.pieces.add(VirtualPiece(0, 1, -1, None, cstr[34], cstr[50]))
+        self.pieces.add(VirtualPiece(1, -1, -1, cstr[24], cstr[17], cstr[45]))
+        self.pieces.add(VirtualPiece(1, 0, -1, cstr[25], None, cstr[46]))
+        self.pieces.add(VirtualPiece(1, 1, -1, cstr[26], cstr[33], cstr[47]))
 
     # Returns a piece given a position
     def find_by_pos(self, *pos):
@@ -107,7 +107,7 @@ class Cube:
             result += "\n"
         return result
 
-    # Returns the cubestring of the cube's current state
+    # Returns the cubestring of the virtual cube's current state
     def generate_cubestring(self):
         return create_cubestring(str(self))
 
@@ -208,7 +208,6 @@ class Cube:
                 p.ypos, p.xpos = -p.xpos, p.ypos
                 p.ycol, p.xcol = p.xcol, p.ycol
 
-    # Whole cube rotations
     def x(self, include_in_solution=True):
         if include_in_solution:
             self.solution_sequence += "x "
@@ -318,16 +317,16 @@ class Cube:
         self.pll()    # 15.29 moves on average
 
     def generate_solution_sequence(self):
-        scrambled_cube = deep_copy(self)
+        scrambled_virtual_cube = deep_copy(self)
         self.cfop()
         self.simplify_sequence()
         for orienting_sequence in "x", "x x", "xi", "y xi", "yi xi":
-            new_cube = deep_copy(scrambled_cube)
-            new_cube.move(orienting_sequence)
-            new_cube.cfop()
-            new_cube.simplify_sequence()
-            if len(new_cube.solution_sequence.split()) < len(self.solution_sequence.split()):
-                self.__dict__ = new_cube.__dict__
+            new_virtual_cube = deep_copy(scrambled_virtual_cube)
+            new_virtual_cube.move(orienting_sequence)
+            new_virtual_cube.cfop()
+            new_virtual_cube.simplify_sequence()
+            if len(new_virtual_cube.solution_sequence.split()) < len(self.solution_sequence.split()):
+                self.__dict__ = new_virtual_cube.__dict__
         return self.solution_sequence
 
     # Solve a cross on the bottom
@@ -399,7 +398,7 @@ class Cube:
                     else:
                         self.move("Di Li D") if side != 1 else self.move("Li D")
 
-            # Rotate the cube to the next side
+            # Rotate the virtual cube to the next side
             self.y()
 
     # Solve the first two layers
@@ -419,7 +418,7 @@ class Cube:
             corner = self.find_by_col(front_color, right_color, bottom_color)
             edge = self.find_by_col(front_color, right_color, None)
 
-            # If the pair is already solved, note this, turn cube, and continue
+            # If the pair is already solved, note this, turn virtual cube, and continue
             if corner.pos() == (1, 1, -1) and corner.zcol == bottom_color and \
                     edge.pos() == (1, 1, 0) and edge.xcol == front_color:
                 solved_pairs.add((corner, edge))
@@ -427,7 +426,7 @@ class Cube:
                 self.yi()
                 continue
 
-            # If at least one member of the pair is tied up somewhere else, turn cube and continue
+            # If at least one member of the pair is tied up somewhere else, turn virtual cube and continue
             if edge.zpos == 0 and edge.pos() != (1, 1, 0) or corner.zpos == -1 and corner.pos() != (1, 1, -1):
                 unavailable_pairs.add((corner, edge))
                 if len(unavailable_pairs) >= 4:
@@ -498,7 +497,7 @@ class Cube:
                 self.move(OLL_ALGORITHMS[configuration])
                 break
 
-            # otherwise, turn the cube and continue
+            # otherwise, turn the virtual cube and continue
             else:
                 self.yi()
 
@@ -530,7 +529,7 @@ class Cube:
                 self.move(PLL_ALGORITHMS[configuration])
                 break
 
-            # otherwise, rotate whole cube and continue
+            # otherwise, rotate whole virtual cube and continue
             else:
                 self.y()
 
@@ -540,9 +539,9 @@ class Cube:
                     self.U()
                     orientations_checked = 0
 
-    # Simplify the sequence, removing full cube rotations, triple turns, and trivial undoings
+    # Simplify the sequence, removing full cube rotations (x, xi, z, etc.), triple turns, and trivial undoings
     def simplify_sequence(self, half_turn_metric=True):
-        # Remove any full cube rotations and adjust all other moves accordingly
+        # Remove any full cube rotations (x, xi, z, etc.) and adjust all other moves accordingly
         defaults = {
             'y': "U",
             'r': "L",
@@ -552,23 +551,23 @@ class Cube:
             'w': "D"
         }
         simplified_sequence = ""
-        cube = Cube(SOLVED)
+        virtual_cube = VirtualCube(SOLVED)
         for turn in self.solution_sequence.split():
             if 'y' in turn or 'x' in turn or 'z' in turn:
-                cube.move(turn)
+                virtual_cube.move(turn)
             else:
                 if 'U' in turn:
-                    simplified_sequence += defaults[cube.find_by_pos(0, 0, 1).zcol]
+                    simplified_sequence += defaults[virtual_cube.find_by_pos(0, 0, 1).zcol]
                 elif 'L' in turn:
-                    simplified_sequence += defaults[cube.find_by_pos(0, -1, 0).ycol]
+                    simplified_sequence += defaults[virtual_cube.find_by_pos(0, -1, 0).ycol]
                 elif 'F' in turn:
-                    simplified_sequence += defaults[cube.find_by_pos(1, 0, 1).xcol]
+                    simplified_sequence += defaults[virtual_cube.find_by_pos(1, 0, 1).xcol]
                 elif 'R' in turn:
-                    simplified_sequence += defaults[cube.find_by_pos(0, 1, 0).ycol]
+                    simplified_sequence += defaults[virtual_cube.find_by_pos(0, 1, 0).ycol]
                 elif 'B' in turn:
-                    simplified_sequence += defaults[cube.find_by_pos(-1, 0, 0).xcol]
+                    simplified_sequence += defaults[virtual_cube.find_by_pos(-1, 0, 0).xcol]
                 elif 'D' in turn:
-                    simplified_sequence += defaults[cube.find_by_pos(0, 0, -1).zcol]
+                    simplified_sequence += defaults[virtual_cube.find_by_pos(0, 0, -1).zcol]
                 if 'i' in turn:
                     simplified_sequence += 'i'
                 simplified_sequence += ' '
@@ -626,16 +625,16 @@ class Cube:
             'R': 'o',
             'L': 'r',
         }
-        cube = Cube(SOLVED)
+        virtual_cube = VirtualCube(SOLVED)
         simplified_sequence = ""
         for turn in self.solution_sequence.split():
-            move = moves[cube.find_by_col(defaults[turn[0]], None, None).pos()]
+            move = moves[virtual_cube.find_by_col(defaults[turn[0]], None, None).pos()]
             if 'U' in move:
                 simplified_sequence += "xi F"
-                cube.move("xi")
+                virtual_cube.move("xi")
             elif 'D' in move:
                 simplified_sequence += "x F"
-                cube.move("x")
+                virtual_cube.move("x")
             else:
                 simplified_sequence += move
             if 'i' in turn:
