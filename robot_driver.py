@@ -17,15 +17,14 @@ while not robot.shutdown_button_is_depressed():
     # If solve button was pressed, solve
     if not robot.shutdown_button_is_depressed():
 
-        # Construct a simulation cube and solve it
-        cube = robot.construct_simulation_cube()
-        solution_sequence = cube.solve()
+        # Construct a simulation cube
+        simulation_cube = robot.construct_simulation_cube()
 
-        # Solve physical cube, abort at any time if necessary
-        for turn in solution_sequence.split():
-            getattr(robot, turn)()
-            if robot.abort_button_is_depressed():
-                break
+        # Generate solution sequence from simulation cube
+        solution_sequence = simulation_cube.solve()
+
+        # Use generated solution sequence to solve physical cube
+        robot.solve(solution_sequence)
 
 # Shut down
 robot.cleanup()

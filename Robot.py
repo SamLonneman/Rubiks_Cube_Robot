@@ -58,9 +58,6 @@ class Robot:
         ]
         self.c = 0
 
-    def cleanup(self):
-        GPIO.cleanup()
-
     def construct_simulation_cube(self):
         self.capture()
         self.calibrate()
@@ -147,18 +144,11 @@ class Robot:
             difference += abs(rgb1[i] - rgb2[i])
         return difference
 
-    def drop(self):
-        self.motorR2.retract(self.motorL2)
-        self.motorF2.retract(self.motorB2)
-
-    def solve_button_is_depressed(self):
-        return GPIO.input(self.SOLVE_BUTTON)
-
-    def abort_button_is_depressed(self):
-        return GPIO.input(self.ABORT_BUTTON)
-
-    def shutdown_button_is_depressed(self):
-        return GPIO.input(self.SHUTDOWN_BUTTON)
+    def solve(self, solution_sequence):
+        for turn in solution_sequence.split().append("drop"):
+            getattr(self, turn)()
+            if self.abort_button_is_depressed():
+                break
 
     def R(self):
         self.motorR1.cw()
@@ -268,3 +258,19 @@ class Robot:
         self.motorF2.retract()
         self.motorF1.cw()
         self.motorF2.extend()
+
+    def drop(self):
+        self.motorR2.retract(self.motorL2)
+        self.motorF2.retract(self.motorB2)
+
+    def solve_button_is_depressed(self):
+        return GPIO.input(self.SOLVE_BUTTON)
+
+    def abort_button_is_depressed(self):
+        return GPIO.input(self.ABORT_BUTTON)
+
+    def shutdown_button_is_depressed(self):
+        return GPIO.input(self.SHUTDOWN_BUTTON)
+
+    def cleanup(self):
+        GPIO.cleanup()
