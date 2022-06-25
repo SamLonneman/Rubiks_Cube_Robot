@@ -18,11 +18,9 @@ class Robot:
         GPIO.setwarnings(False)
         self.SOLVE_BUTTON = 6
         self.ABORT_BUTTON = 13
-        self.SHUTDOWN_BUTTON = 19
         self.HOT_PIN = 26
         GPIO.setup(self.SOLVE_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(self.ABORT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.SHUTDOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(self.HOT_PIN, GPIO.OUT)
         GPIO.output(self.HOT_PIN, True)
         system("sudo sh -c \"echo none > /sys/class/leds/led1/trigger\"")
@@ -46,15 +44,15 @@ class Robot:
         self.white = tuple()
         self.images = list()
         self.COORDINATES = [
-            (929, 727),
-            (841, 608),
-            (754, 488),
-            (1050, 633),
-            (963, 516),
-            (874, 401),
-            (1167, 543),
-            (1078, 428),
-            (988, 309),
+            (941, 584),
+            (858, 464),
+            (766, 352),
+            (1063, 496),
+            (967, 375),
+            (882, 263),
+            (1176, 408),
+            (1088, 287),
+            (999, 169),
         ]
         self.c = 0
 
@@ -75,9 +73,16 @@ class Robot:
     def construct_simulation_cube(self):
         self.capture()
         self.calibrate()
-        virtual_cube = VirtualCube(self.construct_cubestring())
+        cubestring = self.construct_cubestring()
+        if not self.cubestring_is_valid(cubestring):
+            raise Exception(cubestring)
+        virtual_cube = VirtualCube(cubestring)
         virtual_cube.move("z x x x z", False)
         return virtual_cube
+    
+    def cubestring_is_valid(self, cubestring):
+        c = cubestring
+        return c.count('y') == c.count('r') == c.count('g') == c.count('o') == c.count('b') == c.count('w')
 
     def capture(self):
         self.capture_side(0)
@@ -104,10 +109,7 @@ class Robot:
 
     def take_picture(self):
         stream = BytesIO()
-        sleep(1)
         self.camera.capture(stream, format='jpeg')
-        # self.c += 1
-        # self.camera.capture('image' + str(self.c) + '.jpg')
         image = Image.open(stream).load()
         stream.close()
         return [image[coordinate] for coordinate in self.COORDINATES]
@@ -159,7 +161,8 @@ class Robot:
         return difference
 
     def solve(self, solution_sequence):
-        for turn in solution_sequence.split().append("drop"):
+        solution_sequence += " drop"
+        for turn in solution_sequence.split():
             getattr(self, turn)()
             if GPIO.input(self.ABORT_BUTTON):
                 break

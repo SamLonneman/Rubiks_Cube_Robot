@@ -6,11 +6,15 @@ robot = Robot()
 # Proceed until user shuts down
 while robot.proceed():
 
-    # Construct a virtual cube
-    simulation_cube = robot.construct_simulation_cube()
+    # Construct a virtual cube, restart on camera input failure
+    try:
+        virtual_cube = robot.construct_simulation_cube()
+    except Exception as e:
+        print(repr(e))
+        continue
 
     # Generate solution sequence from virtual cube
-    solution_sequence = simulation_cube.generate_solution_sequence()
+    solution_sequence = virtual_cube.generate_solution_sequence()
 
     # Use generated solution sequence to solve cube
     robot.solve(solution_sequence)
