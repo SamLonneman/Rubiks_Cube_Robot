@@ -14,15 +14,17 @@ from Motor import Motor
 class Robot:
 
     def __init__(self):
+        self.camera = PiCamera()
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         self.SOLVE_BUTTON = 6
         self.ABORT_BUTTON = 13
+        self.ENABLE_PINS = 20, 21
         self.HOT_PIN = 26
         GPIO.setup(self.SOLVE_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(self.ABORT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.HOT_PIN, GPIO.OUT)
-        GPIO.output(self.HOT_PIN, True)
+        GPIO.setup(self.ENABLE_PINS, GPIO.OUT, initial=True)
+        GPIO.setup(self.HOT_PIN, GPIO.OUT, initial=True)
         system("sudo sh -c \"echo none > /sys/class/leds/led1/trigger\"")
         system("sudo sh -c \"echo none > /sys/class/leds/led0/trigger\"")
         system("sudo sh -c \"echo 0 > /sys/class/leds/led1/brightness\"")
@@ -35,7 +37,6 @@ class Robot:
         self.motorF2 = Motor(11, 9)
         self.motorB1 = Motor(10, 22)
         self.motorB2 = Motor(5, 0)
-        self.camera = PiCamera()
         self.yellow = tuple()
         self.red = tuple()
         self.green = tuple()
@@ -57,6 +58,7 @@ class Robot:
         self.c = 0
 
     def proceed(self):
+        GPIO.output(self.ENABLE_PINS, True)
         while not GPIO.input(self.SOLVE_BUTTON) and not GPIO.input(self.ABORT_BUTTON):
             sleep(0.1)
         if GPIO.input(self.ABORT_BUTTON):
@@ -68,6 +70,7 @@ class Robot:
                 system("sudo shutdown -h now")
                 return False
             return self.proceed()
+        GPIO.output(self.ENABLE_PINS, False)
         return True
 
     def construct_simulation_cube(self):
@@ -85,6 +88,7 @@ class Robot:
         return c.count('y') == c.count('r') == c.count('g') == c.count('o') == c.count('b') == c.count('w')
 
     def capture(self):
+        self.images.clear()
         self.capture_side(0)
         self.z()
         self.capture_side(3)
