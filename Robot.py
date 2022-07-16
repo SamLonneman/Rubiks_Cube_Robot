@@ -18,13 +18,11 @@ class Robot:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         self.SOLVE_BUTTON = 6
-        self.ABORT_BUTTON = 13
+        self.ABORT_BUTTON = 26
         self.ENABLE_PINS = 20, 21
-        self.HOT_PIN = 26
-        GPIO.setup(self.SOLVE_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.ABORT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.ENABLE_PINS, GPIO.OUT, initial=True)
-        GPIO.setup(self.HOT_PIN, GPIO.OUT, initial=True)
+        self.HOT_PINS = 13, 19
+        GPIO.setup((self.SOLVE_BUTTON, self.ABORT_BUTTON), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup((*self.ENABLE_PINS, *self.HOT_PINS), GPIO.OUT, initial=True)
         system("sudo sh -c \"echo none > /sys/class/leds/led1/trigger\"")
         system("sudo sh -c \"echo none > /sys/class/leds/led0/trigger\"")
         system("sudo sh -c \"echo 0 > /sys/class/leds/led1/brightness\"")
