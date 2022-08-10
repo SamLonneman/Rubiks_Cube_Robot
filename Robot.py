@@ -87,27 +87,17 @@ class Robot:
 
     def capture(self):
         self.images.clear()
-        self.capture_side(0)
+        self.images.append(self.rotate_list(self.take_picture(), 0))
         self.z()
-        self.capture_side(3)
+        self.images.append(self.rotate_list(self.take_picture(), 3))
         self.x()
-        self.capture_side(3)
+        self.images.append(self.rotate_list(self.take_picture(), 3))
         self.x()
-        self.capture_side(3)
+        self.images.append(self.rotate_list(self.take_picture(), 3))
         self.x()
-        self.capture_side(3)
+        self.images.append(self.rotate_list(self.take_picture(), 3))
         self.z()
-        self.capture_side(1)
-
-    def capture_side(self, num_rotations):
-        self.motorL2.retract(self.motorR2)
-        image1 = self.take_picture()
-        self.motorL2.extend(self.motorR2)
-        self.motorF2.retract(self.motorB2)
-        image2 = self.take_picture()
-        self.motorF2.extend(self.motorB2)
-        image1[1], image1[7] = image2[1], image2[7]
-        self.images.append(self.rotate_list(image1, num_rotations))
+        self.images.append(self.rotate_list(self.take_picture(), 1))
 
     def take_picture(self):
         stream = BytesIO()
