@@ -627,17 +627,27 @@ class VirtualCube:
         }
         virtual_cube = VirtualCube(SOLVED)
         simplified_sequence = ""
-        for turn in self.solution_sequence.split():
-            move = moves[virtual_cube.find_by_col(defaults[turn[0]], None, None).pos()]
-            if 'U' in move:
-                simplified_sequence += "xi F"
-                virtual_cube.move("xi")
-            elif 'D' in move:
+        old_solution_sequence = self.solution_sequence.split()
+        for i in range(len(old_solution_sequence)):
+            move = moves[virtual_cube.find_by_col(defaults[old_solution_sequence[i][0]], None, None).pos()]
+            next_move = 'U'
+            if i + 1 < len(old_solution_sequence):
+                next_move = moves[virtual_cube.find_by_col(defaults[old_solution_sequence[i+1][0]], None, None).pos()]
+            if 'U' in move and ('R' in next_move or 'L' in next_move or 'U' in next_move or 'D' in next_move):
+                simplified_sequence += "x B"
+                virtual_cube.move("x")
+            elif 'U' in move and ('F' in next_move or 'B' in next_move):
+                simplified_sequence += "z R"
+                virtual_cube.move("z")
+            elif 'D' in move and ('R' in next_move or 'L' in next_move or 'U' in next_move or 'D' in next_move):
                 simplified_sequence += "x F"
                 virtual_cube.move("x")
+            elif 'D' in move and ('F' in next_move or 'B' in next_move):
+                simplified_sequence += "z L"
+                virtual_cube.move("z")
             else:
                 simplified_sequence += move
-            if 'i' in turn:
+            if 'i' in old_solution_sequence[i]:
                 simplified_sequence += 'i'
             simplified_sequence += ' '
         simplified_sequence = simplified_sequence[:-1]
