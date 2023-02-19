@@ -574,39 +574,25 @@ class VirtualCube:
         simplified_sequence = simplified_sequence[:-1]
         self.solution_sequence = simplified_sequence
 
-        # # BROKEN BROKEN BROKEN (probably not worth fixing, only improves sequence by 3 on avg)
-        # # Repeatedly perform the two following transformations until they have no effect
-        # edit_made = True
-        # while edit_made:
-        #     edit_made = False
-        #
-        #     # Replace triple turns with single inverse turns
-        #     simplified_sequence = ""
-        #     turn_list = self.solution_sequence.split()
-        #     i = 0
-        #     while i < len(turn_list):
-        #         if i < len(turn_list) - 2 and turn_list[i] == turn_list[i + 1] == turn_list[i + 2]:
-        #             simplified_sequence += turn_list[i] + "i "
-        #             edit_made = True
-        #             i += 3
-        #         else:
-        #             simplified_sequence += turn_list[i] + ' '
-        #             i += 1
-        #     self.solution_sequence = simplified_sequence[:-1]
-        #
-        #     # Delete useless trivial "undoing" moves such as "Ri R" or "F Fi"
-        #     simplified_sequence = ""
-        #     turn_list = self.solution_sequence.split()
-        #     i = 0
-        #     while i < len(turn_list):
-        #         if i < len(turn_list) - 1 and (
-        #                 turn_list[i] == turn_list[i + 1] + 'i' or turn_list[i] + 'i' == turn_list[i + 1]):
-        #             edit_made = True
-        #             i += 2
-        #         else:
-        #             simplified_sequence += turn_list[i] + ' '
-        #             i += 1
-        #     self.solution_sequence = simplified_sequence[:-1]
+        # Repeatedly replace triple turns with inverses and remove trivial undoings
+        self.solution_sequence += ' '
+        edit_made = True
+        while edit_made:
+            edit_made = False
+            for move in 'U', 'L', 'F', 'R', 'B', 'D':
+                if (move + ' ') * 3 in self.solution_sequence:
+                    self.solution_sequence = self.solution_sequence.replace((move + ' ') * 3, move + 'i ')
+                    edit_made = True
+                if (move + 'i ') * 3 in self.solution_sequence:
+                    self.solution_sequence = self.solution_sequence.replace((move + 'i ') * 3, move + ' ')
+                    edit_made = True
+                if move + ' ' + move + 'i ' in self.solution_sequence:
+                    self.solution_sequence = self.solution_sequence.replace(move + ' ' + move + 'i ', '')
+                    edit_made = True
+                if move + 'i ' + move + ' ' in self.solution_sequence:
+                    self.solution_sequence = self.solution_sequence.replace(move + 'i ' + move + ' ', '')
+                    edit_made = True
+        self.solution_sequence = self.solution_sequence[:-1]
 
         # Remove any need for U or D turns
         moves = {
